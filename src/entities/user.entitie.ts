@@ -1,63 +1,70 @@
-import { hashSync } from 'bcryptjs';
-import { Exclude } from 'class-transformer';
-import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Address } from './address.entitie';
-import { Car } from './car.entitie';
-import { Comments } from './comments.entitie';
-
+import { hashSync } from "bcryptjs";
+import { Exclude } from "class-transformer";
+import {
+    BeforeInsert,
+    BeforeUpdate,
+    Column,
+    CreateDateColumn,
+    Entity,
+    OneToMany,
+    OneToOne,
+    PrimaryGeneratedColumn,
+} from "typeorm";
+import { Address } from "./address.entitie";
+import { Car } from "./car.entitie";
+import { Comments } from "./comments.entitie";
 
 @Entity()
 export class User {
     @PrimaryGeneratedColumn("uuid")
-    id: string
+    id: string;
 
     @Column({ length: 50 })
-    name: string
+    name: string;
 
     @Column({ length: 400, nullable: true })
-    urlImg: string
+    urlImg: string;
 
     @Column({ unique: true })
-    email: string
+    email: string;
 
     @Column()
     @Exclude()
-    password: string
+    password: string;
 
     @Column({ default: false })
-    isAdm: boolean
+    isAdm: boolean;
 
     @Column({ default: true })
-    salesman: boolean
+    salesman: boolean;
 
     @CreateDateColumn()
-    createdAt: Date
+    createdAt: Date;
 
     @Column({ length: 400, nullable: true })
-    description: string
+    description: string;
 
-    @Column({ nullable: true })
-    birthdate: Date
-
-    @Column({ length: 20 })
-    phone: string
+    @Column()
+    birthdate: Date;
 
     @Column({ length: 20 })
-    cpf: string
+    phone: string;
+
+    @Column({ length: 20 })
+    cpf: string;
 
     @BeforeUpdate()
     @BeforeInsert()
     hashPassword() {
-        this.password = hashSync(this.password, 10)
+        this.password = hashSync(this.password, 10);
     }
 
-    @OneToOne(() => Address, address => address.user)
-    address: Address
+    @OneToOne(() => Address, (address) => address.user)
+    address: Address;
 
-    @OneToMany(() => Car, car => car.user)
-    cars: Car[]
+    @OneToMany(() => Car, (car) => car.user)
+    cars: Car[];
 
-    @OneToMany(() => Comments, comment => comment.user)
-    comments: Comments[]
-
+    @OneToMany(() => Comments, (comment) => comment.user)
+    comments: Comments[];
 }
