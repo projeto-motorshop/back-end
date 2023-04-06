@@ -2,7 +2,7 @@ import { hash } from "bcryptjs";
 import AppDataSource from "../../data-source";
 import { User } from "../../entities/user.entitie";
 import { IUserUpdate } from "../../interfaces/user.interface";
-import { respUserSchema } from "../../schemas/user.schema";
+import { updateUserSchema } from "../../schemas/user.schema";
 
 const updateUserService = async (data: IUserUpdate, userID: string) => {
     const {
@@ -35,7 +35,7 @@ const updateUserService = async (data: IUserUpdate, userID: string) => {
 
     const userUpdate = await userRepository.findOneBy({ id: userID });
 
-    const response = await respUserSchema.validate(userUpdate, {
+    const response = await updateUserSchema.validate(userUpdate, {
         stripUnknown: true,
     });
 
