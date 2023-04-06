@@ -1,11 +1,13 @@
+import * as express from express;
+
 declare global {
     namespace Express {
         interface Request {
             user: {
-                isAdm: boolean
-                id: string
-                isSeller: boolean
-            }
+                id: string;
+                isAdm: boolean;
+                salesman: boolean;
+            };
         }
     }
 }
