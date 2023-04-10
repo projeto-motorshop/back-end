@@ -22,6 +22,8 @@ userRoutes.post(
     createUserController
 );
 
+
+
 userRoutes.get("", ensureAuthenticateMiddleware, listUserControler);
 
 userRoutes.get(

@@ -6,6 +6,7 @@ import {
     Column,
     CreateDateColumn,
     Entity,
+    JoinColumn,
     OneToMany,
     OneToOne,
     PrimaryGeneratedColumn,
@@ -59,7 +60,8 @@ export class User {
         this.password = hashSync(this.password, 10);
     }
 
-    @OneToOne(() => Address, (address) => address.user)
+    @OneToOne(() => Address)
+    @JoinColumn()
     address: Address;
 
     @OneToMany(() => Car, (car) => car.user)

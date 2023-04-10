@@ -6,7 +6,6 @@ export interface IUserResponse {
     phone: string;
     cpf: string;
     description: string;
-    isAdm: boolean;
     salesman: boolean;
     birthdate: Date | null;
     createdAt: Date;
@@ -23,6 +22,12 @@ export interface IUserRequest {
     salesman: boolean;
     isAdm?: boolean;
     birthdate: Date;
+    city: string;
+    state: string;
+    cep: string;
+    street: string;
+    number: string;
+    complement?: string;
 }
 
 export interface IUserUpdate {
@@ -35,6 +40,15 @@ export interface IUserUpdate {
     description?: string;
     salesman?: boolean;
     birthdate?: Date;
+}
+
+export interface IAddressRequest {
+    city: string;
+    state: string;
+    cep: string;
+    street: string;
+    number: string;
+    complement?: string;
 }
 
 export interface IUserLogin {
