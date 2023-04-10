@@ -4,9 +4,16 @@ import {
     IUserResponse,
     IUserRequest,
     IUserUpdate,
+    IAddressRequest,
 } from "../interfaces/user.interface";
 
 const userSchema: SchemaOf<IUserRequest> = yup.object().shape({
+    complement: yup.string().notRequired(),
+    number: yup.string().required(),
+    street: yup.string().required(),
+    cep: yup.string().required(),
+    state: yup.string().required(),
+    city: yup.string().required(),
     description: yup.string().notRequired(),
     birthdate: yup.date().required(),
     salesman: yup.boolean().required(),
@@ -19,12 +26,21 @@ const userSchema: SchemaOf<IUserRequest> = yup.object().shape({
     urlImg: yup.string().notRequired(),
 });
 
+const addressSchema: SchemaOf<IAddressRequest> = yup.object().shape({
+    complement: yup.string().notRequired(),
+    number: yup.string().required(),
+    street: yup.string().required(),
+    cep: yup.string().required(),
+    state: yup.string().required(),
+    city: yup.string().required(),
+});
+
 const respUserSchema: SchemaOf<IUserResponse> = yup.object().shape({
+    address: addressSchema,
     description: yup.string().notRequired(),
     createdAt: yup.date().notRequired(),
     birthdate: yup.date().notRequired(),
     salesman: yup.boolean().notRequired(),
-    isAdm: yup.boolean().notRequired(),
     cpf: yup.string().notRequired(),
     phone: yup.string().notRequired(),
     email: yup.string().email().notRequired(),
@@ -47,4 +63,4 @@ const updateUserSchema: SchemaOf<IUserUpdate> = yup.object().shape({
     urlImg: yup.string().notRequired(),
 });
 
-export { userSchema, respUserSchema, listRespUserSchema, updateUserSchema };
+export { userSchema, respUserSchema, listRespUserSchema, updateUserSchema, addressSchema};
