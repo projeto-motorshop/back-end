@@ -7,7 +7,6 @@ export interface ICarsResponse {
     mileage: string;
     price: number;
     priceFipe: number;
-    createdAt: Date;
     frontImg: string;
     description: string;
 }
@@ -15,7 +14,7 @@ export interface ICarsResponse {
 export interface ICarsRequest {
     brand: string;
     model: string;
-    year: string;
+    year: number;
     fuel: string;
     mileage: string;
     price: number;
@@ -35,3 +34,5 @@ export interface ICarsUpdate {
     frontImg?: string;
     description?: string;
 }
+
+

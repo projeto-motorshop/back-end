@@ -19,27 +19,31 @@ const createUserService = async (body: IUserRequest): Promise<IUserResponse> => 
     });
 
     await addressRepository.save(createAddress);
+    try {
+        const createUser = userRepository.create({
+            name: body.name,
+            urlImg: body.urlImg,
+            email: body.email,
+            password: body.password,
+            phone: body.phone,
+            cpf: body.cpf,
+            description: body.description,
+            salesman: body.salesman,
+            birthdate: body.birthdate,
+            address: createAddress,
+        });
 
-    const createUser = userRepository.create({
-        name: body.name,
-        urlImg: body.urlImg,
-        email: body.email,
-        password: body.password,
-        phone: body.phone,
-        cpf: body.cpf,
-        description: body.description,
-        salesman: body.salesman,
-        birthdate: body.birthdate,
-        address: createAddress,
-    });
+        await userRepository.save(createUser);
 
-    await userRepository.save(createUser);
+        const respUser = await respUserSchema.validate(createUser, {
+            stripUnknown: true,
+        });
 
-    const respUser = await respUserSchema.validate(createUser, {
-        stripUnknown: true,
-    });
-
-    return respUser;
+        return respUser
+    } catch (error) {
+        throw new AppError(error.message, 400)
+    }
 };
 
 export { createUserService };
+

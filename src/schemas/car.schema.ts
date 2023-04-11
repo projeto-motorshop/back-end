@@ -9,7 +9,7 @@ const reqCarSchema: SchemaOf<ICarsRequest> = yup.object().shape({
     price: yup.number().required(),
     mileage: yup.string().required(),
     fuel: yup.string().required(),
-    year: yup.string().required(),
+    year: yup.number().required(),
     model: yup.string().required(),
     brand: yup.string().required(),
 });
@@ -37,9 +37,10 @@ const updateCarSchema: SchemaOf<ICarsRequest> = yup.object().shape({
     price: yup.number().notRequired(),
     mileage: yup.string().notRequired(),
     fuel: yup.string().notRequired(),
-    year: yup.string().notRequired(),
+    year: yup.number().notRequired(),
     model: yup.string().notRequired(),
     brand: yup.string().notRequired(),
 });
 
 export { reqCarSchema, respCarSchema, listRespCarSchema, updateCarSchema };
+
