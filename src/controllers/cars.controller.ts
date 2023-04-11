@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { ICarsRequest, ICarsUpdate } from "../interfaces/cars.intercafe";
 import { createCarService } from "../services/car/createCar.service";
+import { listCarsService } from "../services/car/listCar.service";
+import { pathCarService } from "../services/car/pathCar.service";
 
 const createCarsController = async (req: Request, res: Response) => {
     const car: ICarsRequest = req.body;
@@ -10,8 +12,8 @@ const createCarsController = async (req: Request, res: Response) => {
 };
 
 const listCarsController = async (req: Request, res: Response) => {
-    // const listCars = await listCarsService();
-    // return res.status(200).json(listCars);
+    const listCars = await listCarsService();
+    return res.status(200).json(listCars);
 };
 
 const listCarsByIDController = async (req: Request, res: Response) => {
@@ -21,10 +23,12 @@ const listCarsByIDController = async (req: Request, res: Response) => {
 };
 
 const updateCarsController = async (req: Request, res: Response) => {
+    console.log("cheguei");
+
     const carBody: ICarsUpdate = req.body;
     const carID = req.params.id;
-    // const updateCar = await updateCarService(carBody, carID);
-    // return res.status(200).json(updateCar);
+    const updateCar = await pathCarService(carBody, carID);
+    return res.status(200).json(updateCar);
 };
 
 const deleteCarsController = async (req: Request, res: Response) => {
@@ -40,3 +44,4 @@ export {
     updateCarsController,
     deleteCarsController,
 };
+

@@ -21,8 +21,8 @@ export class Car {
     @Column({ length: 50 })
     fuel: string
 
-    @Column({ length: 50 })
-    year: string
+    @Column()
+    year: number
 
     @Column({ length: 30 })
     mileage: string
