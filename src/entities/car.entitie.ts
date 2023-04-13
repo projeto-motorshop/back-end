@@ -1,48 +1,55 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+    Column,
+    Entity,
+    ManyToOne,
+    OneToMany,
+    PrimaryGeneratedColumn,
+} from "typeorm";
 import { Comments } from "./comments.entitie";
 import { Image } from "./image.entitie";
 import { User } from "./user.entitie";
 
-
 @Entity()
 export class Car {
     @PrimaryGeneratedColumn("uuid")
-    id: string
+    id: string;
 
     @Column()
-    brand: string
+    brand: string;
 
     @Column({ length: 400 })
-    frontImg: string
+    frontImg: string;
 
     @Column({ length: 50 })
-    model: string
+    model: string;
 
     @Column({ length: 50 })
-    fuel: string
+    fuel: string;
 
     @Column()
-    year: number
+    year: string;
 
     @Column({ length: 30 })
-    mileage: string
+    mileage: string;
 
     @Column({ length: 50 })
-    description: string
+    description: string;
 
-    @Column({ type: "decimal", precision: 8, scale: 2 })
-    price: number
+    @Column()
+    price: string;
 
-    @Column({ type: "decimal", precision: 8, scale: 2 })
-    priceFipe: number
+    @Column()
+    priceFipe: string;
 
-    @ManyToOne(() => User, user => user.cars, { onDelete: "CASCADE", eager: true })
-    user: User
+    @ManyToOne(() => User, (user) => user.cars, {
+        onDelete: "CASCADE",
+        eager: true,
+    })
+    user: User;
 
-    @OneToMany(() => Image, images => images.car)
-    images: Image[]
+    @OneToMany(() => Image, (images) => images.car)
+    images: Image[];
 
-    @OneToMany(() => Comments, comments => comments.car)
-    comments: Comments[]
-
+    @OneToMany(() => Comments, (comments) => comments.car)
+    comments: Comments[];
 }
