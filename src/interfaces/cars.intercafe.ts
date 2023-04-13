@@ -2,11 +2,11 @@ export interface ICarsResponse {
     id: string;
     brand: string;
     model: string;
-    year: number;
+    year: string;
     fuel: string;
     mileage: string;
-    price: number;
-    priceFipe: number;
+    price: string;
+    priceFipe: string;
     frontImg: string;
     description: string;
 }
@@ -14,11 +14,11 @@ export interface ICarsResponse {
 export interface ICarsRequest {
     brand: string;
     model: string;
-    year: number;
+    year: string;
     fuel: string;
     mileage: string;
-    price: number;
-    priceFipe: number;
+    price: string;
+    priceFipe: string;
     frontImg: string;
     description: string;
 }
@@ -26,13 +26,11 @@ export interface ICarsRequest {
 export interface ICarsUpdate {
     brand?: string;
     model?: string;
-    year?: number;
+    year?: string;
     fuel?: string;
     mileage?: string;
-    price?: number;
-    priceFipe?: number;
+    price?: string;
+    priceFipe?: string;
     frontImg?: string;
     description?: string;
 }
-
-
