@@ -3,7 +3,6 @@ import { Car } from "../../entities/car.entitie";
 import { Image } from "../../entities/image.entitie";
 import { User } from "../../entities/user.entitie";
 import { ICarsRequest } from "../../interfaces/cars.intercafe";
-import { respCarSchema } from "../../schemas/car.schema";
 
 const createCarService = async (
     {
@@ -27,10 +26,6 @@ const createCarService = async (
 
     const findUser = await userRepository.findOneBy({ id: userID });
 
-
-    const createImg = images.forEach((el) => imgRepository.create({ urlImg: el.urlImg }))
-    console.log(createImg);
-
     const createCar = carRepository.create({
         brand: brand,
         model: model,
@@ -42,16 +37,31 @@ const createCarService = async (
         frontImg: frontImg,
         description: description,
         user: findUser,
-
+        images: images
     });
 
     await carRepository.save(createCar);
 
-    const respCar = await respCarSchema.validate(createCar, {
-        stripUnknown: true,
-    });
 
-    return respCar;
+    for (let i = 0; i < images.length; i++) {
+        const createImg = images[i]
+        const newImage = imgRepository.create({
+            ...createImg,
+            car: createCar
+        })
+
+        await imgRepository.save(newImage)
+
+    }
+
+    console.log(createCar);
+
+
+    // const respCar = await respCarSchema.validate(createCar, {
+    //     stripUnknown: true,
+    // });
+
+    return createCar;
 };
 
 export { createCarService };

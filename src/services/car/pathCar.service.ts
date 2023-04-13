@@ -2,11 +2,11 @@
 import AppDataSource from '../../data-source';
 import { Car } from '../../entities/car.entitie';
 import AppError from './../../errors/appError';
-import { ICarsResponse, ICarsUpdate } from './../../interfaces/cars.intercafe';
+import { ICarsUpdate } from './../../interfaces/cars.intercafe';
 
 
 
-export const pathCarService = async (carsData: ICarsUpdate, carsId: string): Promise<ICarsResponse> => {
+export const pathCarService = async (carsData: ICarsUpdate, carsId: string): Promise<ICarsUpdate> => {
 
     const carsRepo = AppDataSource.getRepository(Car);
     const findcars = await carsRepo.findOneBy({
@@ -22,7 +22,7 @@ export const pathCarService = async (carsData: ICarsUpdate, carsId: string): Pro
         // const updatedCarValidator = await updateCarSchema.validate(updatedCar, {
         //     stripUnknown: true
         // })
-        console.log("aqui");
+
 
 
         return updatedCar

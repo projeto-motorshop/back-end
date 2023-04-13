@@ -8,46 +8,42 @@ export interface IImageResponse {
     carId: string
 }
 
-export interface ICarsRequest {
-    brand: string;
-    model: string;
-    year: number;
-    fuel: string;
-    mileage: string;
-    images: IImageRequest[]
-    price: number;
-    priceFipe: number;
-    frontImg: string;
-    description: string;
-}
-
 export interface ICarsResponse {
     id: string;
     brand: string;
     model: string;
-    year: number;
+    year: string;
     fuel: string;
     mileage: string;
-    price: number;
-    priceFipe: number;
+    price: string;
+    priceFipe: string;
     frontImg: string;
     description: string;
-    images: IImageResponse[]
+    images: IImageResponse[];
 }
 
-
+export interface ICarsRequest {
+    brand: string;
+    model: string;
+    year: string;
+    fuel: string;
+    mileage: string;
+    images: IImageRequest[];
+    price: string;
+    priceFipe: string;
+    frontImg: string;
+    description: string;
+}
 
 export interface ICarsUpdate {
     brand?: string;
     model?: string;
-    year?: number;
+    year?: string;
     fuel?: string;
     mileage?: string;
-    price?: number;
-    priceFipe?: number;
+    price?: string;
+    priceFipe?: string;
     frontImg?: string;
     description?: string;
-    images?: IImageRequest[]
+    images?: IImageRequest[];
 }
-
-

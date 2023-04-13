@@ -20,25 +20,31 @@ const reqCarSchema: SchemaOf<ICarsRequest> = yup.object().shape({
     images: reqImgSchema,
     description: yup.string().required(),
     frontImg: yup.string().required(),
-    priceFipe: yup.number().required(),
-    price: yup.number().required(),
+    priceFipe: yup.string().required(),
+    price: yup.string().required(),
     mileage: yup.string().required(),
     fuel: yup.string().required(),
-    year: yup.number().required(),
+    year: yup.string().required(),
     model: yup.string().required(),
     brand: yup.string().required(),
 });
 
 const respCarSchema: SchemaOf<ICarsResponse> = yup.object().shape({
-    images: respImgSchema,
+    images: yup.array().of(
+        yup.object().shape({
+            id: yup.string().notRequired(),
+            urlImg: yup.string().notRequired(),
+            carId: yup.string().notRequired()
+        })
+    ),
     description: yup.string().notRequired(),
     frontImg: yup.string().notRequired(),
     createdAt: yup.date().notRequired(),
-    priceFipe: yup.number().notRequired(),
-    price: yup.number().notRequired(),
+    priceFipe: yup.string().notRequired(),
+    price: yup.string().notRequired(),
     mileage: yup.string().notRequired(),
     fuel: yup.string().notRequired(),
-    year: yup.number().notRequired(),
+    year: yup.string().notRequired(),
     model: yup.string().notRequired(),
     brand: yup.string().notRequired(),
     id: yup.string().notRequired(),
@@ -50,11 +56,11 @@ const updateCarSchema: SchemaOf<ICarsUpdate> = yup.object().shape({
     images: reqImgSchema,
     description: yup.string().notRequired(),
     frontImg: yup.string().notRequired(),
-    priceFipe: yup.number().notRequired(),
-    price: yup.number().notRequired(),
+    priceFipe: yup.string().notRequired(),
+    price: yup.string().notRequired(),
     mileage: yup.string().notRequired(),
     fuel: yup.string().notRequired(),
-    year: yup.number().notRequired(),
+    year: yup.string().notRequired(),
     model: yup.string().notRequired(),
     brand: yup.string().notRequired(),
 });
