@@ -1,3 +1,13 @@
+
+export interface IImageRequest {
+    urlImg: string
+}
+export interface IImageResponse {
+    id: string
+    urlImg: string
+    carId: string
+}
+
 export interface ICarsResponse {
     id: string;
     brand: string;
@@ -9,6 +19,7 @@ export interface ICarsResponse {
     priceFipe: string;
     frontImg: string;
     description: string;
+    images: IImageResponse[];
 }
 
 export interface ICarsRequest {
@@ -17,6 +28,7 @@ export interface ICarsRequest {
     year: string;
     fuel: string;
     mileage: string;
+    images: IImageRequest[];
     price: string;
     priceFipe: string;
     frontImg: string;
@@ -33,4 +45,5 @@ export interface ICarsUpdate {
     priceFipe?: string;
     frontImg?: string;
     description?: string;
+    images?: IImageRequest[];
 }

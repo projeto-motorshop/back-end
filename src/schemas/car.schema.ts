@@ -1,8 +1,23 @@
 import * as yup from "yup";
 import { SchemaOf } from "yup";
-import { ICarsRequest, ICarsResponse } from "../interfaces/cars.intercafe";
+import { ICarsRequest, ICarsResponse, ICarsUpdate, IImageRequest, IImageResponse } from "../interfaces/cars.intercafe";
+
+
+const reqImgSchema: SchemaOf<IImageRequest[]> = yup.array().of(
+    yup.object().shape({
+        urlImg: yup.string().notRequired(),
+    })
+)
+const respImgSchema: SchemaOf<IImageResponse[]> = yup.array().of(
+    yup.object().shape({
+        id: yup.string().notRequired(),
+        urlImg: yup.string().notRequired(),
+        carId: yup.string().notRequired()
+    })
+)
 
 const reqCarSchema: SchemaOf<ICarsRequest> = yup.object().shape({
+    images: reqImgSchema,
     description: yup.string().required(),
     frontImg: yup.string().required(),
     priceFipe: yup.string().required(),
@@ -15,6 +30,13 @@ const reqCarSchema: SchemaOf<ICarsRequest> = yup.object().shape({
 });
 
 const respCarSchema: SchemaOf<ICarsResponse> = yup.object().shape({
+    images: yup.array().of(
+        yup.object().shape({
+            id: yup.string().notRequired(),
+            urlImg: yup.string().notRequired(),
+            carId: yup.string().notRequired()
+        })
+    ),
     description: yup.string().notRequired(),
     frontImg: yup.string().notRequired(),
     createdAt: yup.date().notRequired(),
@@ -30,7 +52,8 @@ const respCarSchema: SchemaOf<ICarsResponse> = yup.object().shape({
 
 const listRespCarSchema = yup.array(respCarSchema);
 
-const updateCarSchema: SchemaOf<ICarsRequest> = yup.object().shape({
+const updateCarSchema: SchemaOf<ICarsUpdate> = yup.object().shape({
+    images: reqImgSchema,
     description: yup.string().notRequired(),
     frontImg: yup.string().notRequired(),
     priceFipe: yup.string().notRequired(),
@@ -43,3 +66,4 @@ const updateCarSchema: SchemaOf<ICarsRequest> = yup.object().shape({
 });
 
 export { reqCarSchema, respCarSchema, listRespCarSchema, updateCarSchema };
+
