@@ -1,24 +1,30 @@
 import * as yup from "yup";
 import { SchemaOf } from "yup";
-import { ICarsRequest, ICarsResponse, ICarsUpdate, IImageRequest, IImageResponse } from "../interfaces/cars.intercafe";
-
+import {
+    ICarsRequest,
+    ICarsResponse,
+    ICarsUpdate,
+    IImageRequest,
+    IImageResponse,
+} from "../interfaces/cars.intercafe";
 
 const reqImgSchema: SchemaOf<IImageRequest[]> = yup.array().of(
     yup.object().shape({
         urlImg: yup.string().notRequired(),
     })
-)
+);
 const respImgSchema: SchemaOf<IImageResponse[]> = yup.array().of(
     yup.object().shape({
         id: yup.string().notRequired(),
         urlImg: yup.string().notRequired(),
-        carId: yup.string().notRequired()
+        carId: yup.string().notRequired(),
     })
-)
+);
 
 const reqCarSchema: SchemaOf<ICarsRequest> = yup.object().shape({
     images: reqImgSchema,
     description: yup.string().required(),
+    color: yup.string().required(),
     frontImg: yup.string().required(),
     priceFipe: yup.string().required(),
     price: yup.string().required(),
@@ -34,10 +40,12 @@ const respCarSchema: SchemaOf<ICarsResponse> = yup.object().shape({
         yup.object().shape({
             id: yup.string().notRequired(),
             urlImg: yup.string().notRequired(),
-            carId: yup.string().notRequired()
+            carId: yup.string().notRequired(),
         })
     ),
     description: yup.string().notRequired(),
+    isPublished: yup.boolean().notRequired(),
+    goodDeal: yup.boolean().notRequired(),
     frontImg: yup.string().notRequired(),
     createdAt: yup.date().notRequired(),
     priceFipe: yup.string().notRequired(),
@@ -45,6 +53,7 @@ const respCarSchema: SchemaOf<ICarsResponse> = yup.object().shape({
     mileage: yup.string().notRequired(),
     fuel: yup.string().notRequired(),
     year: yup.string().notRequired(),
+    color: yup.string().notRequired(),
     model: yup.string().notRequired(),
     brand: yup.string().notRequired(),
     id: yup.string().notRequired(),
@@ -55,6 +64,8 @@ const listRespCarSchema = yup.array(respCarSchema);
 const updateCarSchema: SchemaOf<ICarsUpdate> = yup.object().shape({
     images: reqImgSchema,
     description: yup.string().notRequired(),
+    color: yup.string().notRequired(),
+    isPublished: yup.boolean().notRequired(),
     frontImg: yup.string().notRequired(),
     priceFipe: yup.string().notRequired(),
     price: yup.string().notRequired(),
@@ -66,4 +77,3 @@ const updateCarSchema: SchemaOf<ICarsUpdate> = yup.object().shape({
 });
 
 export { reqCarSchema, respCarSchema, listRespCarSchema, updateCarSchema };
-

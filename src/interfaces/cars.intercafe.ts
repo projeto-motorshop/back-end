@@ -1,16 +1,18 @@
-
 export interface IImageRequest {
-    urlImg: string
+    urlImg: string;
 }
 export interface IImageResponse {
-    id: string
-    urlImg: string
-    carId: string
+    id: string;
+    urlImg: string;
+    carId: string;
 }
 
 export interface ICarsResponse {
     id: string;
     brand: string;
+    color: string;
+    goodDeal: boolean;
+    isPublished: boolean;
     model: string;
     year: string;
     fuel: string;
@@ -23,6 +25,7 @@ export interface ICarsResponse {
 }
 
 export interface ICarsRequest {
+    color: string;
     brand: string;
     model: string;
     year: string;
@@ -36,6 +39,8 @@ export interface ICarsRequest {
 }
 
 export interface ICarsUpdate {
+    color?: string;
+    isPublished?: boolean;
     brand?: string;
     model?: string;
     year?: string;

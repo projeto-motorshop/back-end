@@ -22,7 +22,7 @@ const loginUserService = async ({ email, password }: IUserLogin) => {
     }
 
     const tokenUser = jwt.sign(
-        { isAdm: findUsers.isAdm },
+        { isAdm: findUsers.isAdm, salesman: findUsers.salesman },
         process.env.SECRET_KEY,
         {
             subject: findUsers.id,

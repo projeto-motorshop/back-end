@@ -41,6 +41,15 @@ export class Car {
     @Column()
     priceFipe: string;
 
+    @Column({ length: 20 })
+    color: string;
+
+    @Column({ default: false })
+    goodDeal: boolean;
+
+    @Column({ default: true })
+    isPublished: boolean;
+
     @ManyToOne(() => User, (user) => user.cars, {
         onDelete: "CASCADE",
         eager: true,

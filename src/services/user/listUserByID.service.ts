@@ -6,7 +6,7 @@ const listUserIDService = async (userID: string) => {
 
     const findUser = await userRepository.findOne({
         where: { id: userID },
-        relations: {address: true}
+        relations: { address: true, cars: true },
     });
 
     return findUser;
