@@ -1,22 +1,19 @@
 import { NextFunction, Request, Response } from "express";
 import AppError from "../../errors/appError";
 
-const ensureUserIsOwnerMiddleware = async (
+const ensureSalesmanValidMiddleware = async (
     req: Request,
     res: Response,
     next: NextFunction
 ) => {
-    const { id, isAdm } = req.user;
+    const { salesman } = req.user;
 
-    if (isAdm) {
-        next();
-    }
-
-    if (id !== req.params.id) {
+    console.log(req.user);
+    if (!salesman) {
         throw new AppError("Not Authorization", 401);
     }
 
     return next();
 };
 
-export { ensureUserIsOwnerMiddleware };
+export { ensureSalesmanValidMiddleware };

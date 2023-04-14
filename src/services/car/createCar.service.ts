@@ -3,6 +3,7 @@ import { Car } from "../../entities/car.entitie";
 import { Image } from "../../entities/image.entitie";
 import { User } from "../../entities/user.entitie";
 import { ICarsRequest } from "../../interfaces/cars.intercafe";
+import { respCarSchema } from "../../schemas/car.schema";
 
 const createCarService = async (
     {
@@ -16,13 +17,13 @@ const createCarService = async (
         frontImg,
         description,
         images,
+        color,
     }: ICarsRequest,
     userID: string
-
 ) => {
     const userRepository = AppDataSource.getRepository(User);
     const carRepository = AppDataSource.getRepository(Car);
-    const imgRepository = AppDataSource.getRepository(Image)
+    const imgRepository = AppDataSource.getRepository(Image);
 
     const findUser = await userRepository.findOneBy({ id: userID });
 
@@ -37,32 +38,27 @@ const createCarService = async (
         frontImg: frontImg,
         description: description,
         user: findUser,
-        images: images
+        images: images,
+        color: color,
     });
 
     await carRepository.save(createCar);
 
-
     for (let i = 0; i < images.length; i++) {
-        const createImg = images[i]
+        const createImg = images[i];
         const newImage = imgRepository.create({
             ...createImg,
-            car: createCar
-        })
+            car: createCar,
+        });
 
-        await imgRepository.save(newImage)
-
+        await imgRepository.save(newImage);
     }
 
-    console.log(createCar);
+    const respCar = await respCarSchema.validate(createCar, {
+        stripUnknown: true,
+    });
 
-
-    // const respCar = await respCarSchema.validate(createCar, {
-    //     stripUnknown: true,
-    // });
-
-    return createCar;
+    return respCar;
 };
 
 export { createCarService };
-
