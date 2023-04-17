@@ -31,11 +31,11 @@ export interface ICarsRequest {
     year: string;
     fuel: string;
     mileage: string;
-    images: IImageRequest[];
     price: string;
     priceFipe: string;
     frontImg: string;
     description: string;
+    images: IImageRequest[];
 }
 
 export interface ICarsUpdate {
