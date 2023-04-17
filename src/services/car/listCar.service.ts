@@ -1,8 +1,20 @@
 import AppDataSource from "../../data-source";
 import { Car } from "../../entities/car.entitie";
 
-export const listCarsService = async (): Promise<Car[]> => {
+export const listCarsService = async (limit: number, offset: number) => {
     const carRepo = AppDataSource.getRepository(Car);
+
+    const totalCars = await carRepo.count();
+
+    const nextPage = offset + limit;
+    const nextUrl =
+        nextPage < totalCars ? `/cars?limit=${limit}&offset=${nextPage}` : null;
+
+    const previous = offset - limit < 0 ? null : offset - limit;
+
+    const previousUrl =
+        previous != null ? `/cars?limit=${limit}&offset=${previous}` : null;
+
     const allCar = await carRepo
         .createQueryBuilder("Car")
         .innerJoinAndSelect("Car.user", "User")
@@ -16,7 +28,9 @@ export const listCarsService = async (): Promise<Car[]> => {
             "User.urlImg",
             "User.phone",
         ])
+        .skip(offset)
+        .take(limit)
         .getMany();
 
-    return allCar;
+    return { allCar, totalCars, nextUrl, previousUrl };
 };

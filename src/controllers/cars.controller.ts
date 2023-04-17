@@ -13,8 +13,30 @@ const createCarsController = async (req: Request, res: Response) => {
 };
 
 const listCarsController = async (req: Request, res: Response) => {
-    const listCars = await listCarsService();
-    return res.status(200).json(listCars);
+    let { limit, offset }: any = req.query;
+    limit = parseInt(limit);
+    offset = parseInt(offset);
+
+    if (!limit) {
+        limit = 12;
+    }
+    if (!offset) {
+        offset = 0;
+    }
+
+    const { allCar, totalCars, nextUrl, previousUrl } = await listCarsService(
+        limit,
+        offset
+    );
+
+    return res.status(200).json({
+        nextUrl,
+        previousUrl,
+        limit,
+        offset,
+        totalCars,
+        allCars: allCar,
+    });
 };
 
 const listCarsByIDController = async (req: Request, res: Response) => {
@@ -45,4 +67,3 @@ export {
     updateCarsController,
     deleteCarsController,
 };
-
