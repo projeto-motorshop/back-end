@@ -9,8 +9,8 @@ export const listProfileService = async (
 
     const userProfile = await userRepository
         .createQueryBuilder("user")
-        .innerJoinAndSelect("user.address", "address")
-        .innerJoinAndSelect("user.cars", "car")
+        .leftJoinAndSelect("user.address", "address")
+        .leftJoinAndSelect("user.cars", "car")
         .select([
             "user.id",
             "user.name",
