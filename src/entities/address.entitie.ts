@@ -1,27 +1,25 @@
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import { User } from "./user.entitie";
-
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Address {
     @PrimaryGeneratedColumn("uuid")
-    id: string
+    id: string;
 
     @Column()
-    state: string
+    state: string;
 
     @Column({ length: 400 })
-    cep: string
+    cep: string;
 
     @Column({ length: 50 })
-    street: string
+    street: string;
 
     @Column({ length: 50 })
-    city: string
+    city: string;
 
     @Column({ length: 50 })
-    number: string
+    number: string;
 
     @Column({ length: 30, nullable: true })
-    complement: string
+    complement: string;
 }
