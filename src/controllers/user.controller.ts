@@ -1,11 +1,16 @@
 import { Request, Response } from "express";
-import { IUserRequest, IUserUpdate } from "../interfaces/user.interface";
+import {
+    IAddressUpdate,
+    IUserRequest,
+    IUserUpdate,
+} from "../interfaces/user.interface";
 import { createUserService } from "../services/user/createUser.service";
 import { deleteUserService } from "../services/user/deleteUser.service";
 import { listUsersService } from "../services/user/listUser.service";
 import { listUserIDService } from "../services/user/listUserByID.service";
 import { updateUserService } from "../services/user/updateUser.service";
 import { listProfileService } from "../services/user/listUserProfile.service";
+import { updateAdressService } from "../services/user/updateAndress.service";
 
 const createUserController = async (req: Request, res: Response) => {
     const user: IUserRequest = req.body;
@@ -43,6 +48,13 @@ const listProfileController = async (req: Request, resp: Response) => {
     return resp.json(userProfile);
 };
 
+const updateAdressController = async (req: Request, res: Response) => {
+    const adressData: IAddressUpdate = req.body;
+    const userID = req.params.id;
+    const updateAdress = await updateAdressService(adressData, userID);
+    return res.status(200).json(updateAdress);
+};
+
 export {
     createUserController,
     listUserControler,
@@ -50,4 +62,5 @@ export {
     updateUserController,
     deleteUserController,
     listProfileController,
+    updateAdressController,
 };

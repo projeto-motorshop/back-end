@@ -5,6 +5,7 @@ import {
     IUserRequest,
     IUserUpdate,
     IAddressRequest,
+    IAddressUpdate,
 } from "../interfaces/user.interface";
 import { listRespCarSchema, respCarSchema } from "./car.schema";
 
@@ -65,10 +66,20 @@ const updateUserSchema: SchemaOf<IUserUpdate> = yup.object().shape({
     urlImg: yup.string().notRequired().nullable(),
 });
 
+const updateAddressSchema: SchemaOf<IAddressUpdate> = yup.object().shape({
+    complement: yup.string().notRequired().nullable(),
+    number: yup.string().notRequired(),
+    street: yup.string().notRequired(),
+    cep: yup.string().notRequired(),
+    state: yup.string().notRequired(),
+    city: yup.string().notRequired(),
+});
+
 export {
     userSchema,
     respUserSchema,
     listRespUserSchema,
     updateUserSchema,
     addressSchema,
+    updateAddressSchema,
 };

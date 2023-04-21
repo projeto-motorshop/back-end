@@ -62,6 +62,15 @@ export interface IAddressRsponse {
     complement?: string | null;
 }
 
+export interface IAddressUpdate {
+    city?: string;
+    state?: string;
+    cep?: string;
+    street?: string;
+    number?: string;
+    complement?: string | null;
+}
+
 export interface IUserLogin {
     email: string;
     password: string;
