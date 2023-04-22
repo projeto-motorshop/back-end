@@ -5,10 +5,15 @@ import {
     listProfileController,
     listUserByIdController,
     listUserControler,
+    updateAdressController,
     updateUserController,
 } from "../controllers/user.controller";
 import { ensureDataIsValidMiddleware } from "../middlewares/user/ensureDataIsValid.middleware";
-import { updateUserSchema, userSchema } from "../schemas/user.schema";
+import {
+    updateAddressSchema,
+    updateUserSchema,
+    userSchema,
+} from "../schemas/user.schema";
 import { ensureUserEmailExistsMiddleware } from "../middlewares/user/ensureEmailExist.middleware";
 import { ensureAuthenticateMiddleware } from "../middlewares/ensureAuth.middleware";
 import { ensureExistUserMiddleware } from "../middlewares/user/ensureExistUser.middleware";
@@ -49,4 +54,13 @@ userRoutes.delete(
     ensureExistUserMiddleware,
     ensureUserIsOwnerMiddleware,
     deleteUserController
+);
+
+userRoutes.patch(
+    "/adress/:id",
+    ensureDataIsValidMiddleware(updateAddressSchema),
+    ensureAuthenticateMiddleware,
+    ensureExistUserMiddleware,
+    ensureUserIsOwnerMiddleware,
+    updateAdressController
 );
