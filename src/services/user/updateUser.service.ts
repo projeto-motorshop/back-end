@@ -2,7 +2,7 @@ import { hash } from "bcryptjs";
 import AppDataSource from "../../data-source";
 import { User } from "../../entities/user.entitie";
 import { IUserUpdate } from "../../interfaces/user.interface";
-import { updateUserSchema } from "../../schemas/user.schema";
+import { respUserSchema, updateUserSchema } from "../../schemas/user.schema";
 
 const updateUserService = async (data: IUserUpdate, userID: string) => {
     const {
@@ -19,7 +19,10 @@ const updateUserService = async (data: IUserUpdate, userID: string) => {
 
     const userRepository = AppDataSource.getRepository(User);
 
-    const findUser = await userRepository.findOneBy({ id: userID });
+    const findUser = await userRepository.findOne({
+        where: { id: userID },
+        relations: { address: true, cars: true },
+    });
 
     await userRepository.update(userID, {
         urlImg: urlImg ? urlImg : findUser.urlImg,
@@ -33,13 +36,22 @@ const updateUserService = async (data: IUserUpdate, userID: string) => {
         description: description ? description : findUser.description,
     });
 
-    const userUpdate = await userRepository.findOneBy({ id: userID });
+    const userUpdate = await userRepository.findOne({
+        where: { id: userID },
+        relations: { address: true, cars: true },
+    });
 
-    const response = await updateUserSchema.validate(userUpdate, {
+    const response = {
+        ...userUpdate,
+        address: userUpdate.address,
+        cars: userUpdate.cars,
+    };
+
+    const validatedResponse = await updateUserSchema.validate(response, {
         stripUnknown: true,
     });
 
-    return response;
+    return validatedResponse;
 };
 
 export { updateUserService };
