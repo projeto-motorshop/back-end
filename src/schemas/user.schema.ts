@@ -7,7 +7,7 @@ import {
     IAddressRequest,
     IAddressUpdate,
 } from "../interfaces/user.interface";
-import { listRespCarSchema, respCarSchema } from "./car.schema";
+import { listRespCarSchema } from "./car.schema";
 
 const userSchema: SchemaOf<IUserRequest> = yup.object().shape({
     complement: yup.string().notRequired().nullable(),
@@ -38,7 +38,7 @@ const addressSchema: SchemaOf<IAddressRequest> = yup.object().shape({
 });
 
 const respUserSchema: SchemaOf<IUserResponse> = yup.object().shape({
-    car: listRespCarSchema,
+    cars: listRespCarSchema,
     address: addressSchema,
     description: yup.string().notRequired().nullable(),
     createdAt: yup.date().notRequired(),
@@ -52,20 +52,6 @@ const respUserSchema: SchemaOf<IUserResponse> = yup.object().shape({
     id: yup.string().notRequired(),
 });
 
-const listRespUserSchema = yup.array(respUserSchema);
-
-const updateUserSchema: SchemaOf<IUserUpdate> = yup.object().shape({
-    description: yup.string().notRequired().nullable(),
-    birthdate: yup.date().notRequired(),
-    salesman: yup.boolean().notRequired(),
-    cpf: yup.string().notRequired(),
-    phone: yup.string().notRequired(),
-    password: yup.string().notRequired(),
-    email: yup.string().email().notRequired(),
-    name: yup.string().notRequired(),
-    urlImg: yup.string().notRequired().nullable(),
-});
-
 const updateAddressSchema: SchemaOf<IAddressUpdate> = yup.object().shape({
     complement: yup.string().notRequired().nullable(),
     number: yup.string().notRequired(),
@@ -73,6 +59,23 @@ const updateAddressSchema: SchemaOf<IAddressUpdate> = yup.object().shape({
     cep: yup.string().notRequired(),
     state: yup.string().notRequired(),
     city: yup.string().notRequired(),
+    id: yup.string().notRequired(),
+});
+const listRespUserSchema = yup.array(respUserSchema);
+
+const updateUserSchema: SchemaOf<IUserResponse> = yup.object().shape({
+    cars: listRespCarSchema,
+    address: updateAddressSchema,
+    description: yup.string().notRequired().nullable(),
+    createdAt: yup.date().notRequired(),
+    birthdate: yup.date().notRequired(),
+    salesman: yup.boolean().notRequired(),
+    cpf: yup.string().notRequired(),
+    phone: yup.string().notRequired(),
+    email: yup.string().email().notRequired(),
+    name: yup.string().notRequired(),
+    urlImg: yup.string().notRequired().nullable(),
+    id: yup.string().notRequired(),
 });
 
 export {
