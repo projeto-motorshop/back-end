@@ -11,6 +11,7 @@ import { listUserIDService } from "../services/user/listUserByID.service";
 import { updateUserService } from "../services/user/updateUser.service";
 import { listProfileService } from "../services/user/listUserProfile.service";
 import { updateAdressService } from "../services/user/updateAndress.service";
+import { resetPasswordService } from "../services/user/resetPassword.service";
 
 const createUserController = async (req: Request, res: Response) => {
     const user: IUserRequest = req.body;
@@ -55,6 +56,14 @@ const updateAdressController = async (req: Request, res: Response) => {
     return res.status(200).json(updateAdress);
 };
 
+const resetPasswordController = async (req: Request, res: Response) => {
+    const { email } = req.body;
+    const { protocol } = req;
+    const host = req.get("host");
+    await resetPasswordService(email, protocol, host);
+    return res.status(200).json({ message: "Token reset password sent" });
+};
+
 export {
     createUserController,
     listUserControler,
@@ -63,4 +72,5 @@ export {
     deleteUserController,
     listProfileController,
     updateAdressController,
+    resetPasswordController,
 };
