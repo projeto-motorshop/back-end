@@ -5,6 +5,7 @@ import {
     listProfileController,
     listUserByIdController,
     listUserControler,
+    resetPasswordController,
     updateAdressController,
     updateUserController,
 } from "../controllers/user.controller";
@@ -64,3 +65,5 @@ userRoutes.patch(
     ensureUserIsOwnerMiddleware,
     updateAdressController
 );
+
+userRoutes.post("/resetPassword", resetPasswordController);
