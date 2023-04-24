@@ -32,7 +32,7 @@ export class Car {
     @Column({ length: 30 })
     mileage: string;
 
-    @Column({ length: 50 })
+    @Column({ length: 500 })
     description: string;
 
     @Column()
