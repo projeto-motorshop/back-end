@@ -23,15 +23,15 @@ const respImgSchema: SchemaOf<IImageResponse[]> = yup.array().of(
 
 const reqCarSchema: SchemaOf<ICarsRequest> = yup.object().shape({
     images: reqImgSchema,
-    description: yup.string().required(),
-    color: yup.string().required(),
-    frontImg: yup.string().required(),
+    description: yup.string().max(500).required(),
+    color: yup.string().max(20).required(),
+    frontImg: yup.string().max(400).required(),
     priceFipe: yup.string().required(),
     price: yup.string().required(),
-    mileage: yup.string().required(),
-    fuel: yup.string().required(),
+    mileage: yup.string().max(30).required(),
+    fuel: yup.string().max(50).required(),
     year: yup.string().required(),
-    model: yup.string().required(),
+    model: yup.string().max(50).required(),
     brand: yup.string().required(),
 });
 

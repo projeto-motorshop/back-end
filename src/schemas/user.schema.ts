@@ -16,16 +16,16 @@ const userSchema: SchemaOf<IUserRequest> = yup.object().shape({
     cep: yup.string().required(),
     state: yup.string().required(),
     city: yup.string().required(),
-    description: yup.string().notRequired().nullable(),
+    description: yup.string().max(400).notRequired().nullable(),
     birthdate: yup.date().required(),
     salesman: yup.boolean().required(),
     isAdm: yup.boolean().notRequired(),
-    cpf: yup.string().required(),
-    phone: yup.string().required(),
+    cpf: yup.string().max(20).required(),
+    phone: yup.string().max(20).required(),
     password: yup.string().required(),
     email: yup.string().email().required(),
-    name: yup.string().required(),
-    urlImg: yup.string().notRequired().nullable(),
+    name: yup.string().max(50).required(),
+    urlImg: yup.string().max(400).notRequired().nullable(),
 });
 
 const addressSchema: SchemaOf<IAddressRequest> = yup.object().shape({
