@@ -56,7 +56,7 @@ class SendEmailService {
                     button: {
                         color: "#4529E6",
                         text: "Reset your password",
-                        link: `${protocol}://${host}/users/resetPassword/${resetToken}`,
+                        link: `${protocol}://localhost:5173/users/resetPassword/${resetToken}`,
                     },
                 },
                 outro: "If you did not request a password reset, no further action is required on your part.",

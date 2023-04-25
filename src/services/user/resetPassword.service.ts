@@ -1,37 +1,20 @@
-import { randomUUID } from "crypto";
+import { hash } from "bcryptjs";
 import AppDataSource from "../../data-source";
 import { User } from "../../entities/user.entitie";
 import AppError from "../../errors/appError";
-import { emailService } from "../../utils/sendEmail";
 
-const resetPasswordService = async (
-    email: string,
-    protocol: string,
-    host: string
-) => {
+const resetPasswordService = async (password: any, resetToken: string) => {
     const userRepository = AppDataSource.getRepository(User);
 
-    const findUser = await userRepository.findOneBy({ email: email });
+    const findUser = await userRepository.findOneBy({ resetToken: resetToken });
 
     if (!findUser) {
-        throw new AppError("User not found", 404);
+        throw new AppError("User not found!");
     }
 
-    const resetToken = randomUUID();
-
     await userRepository.update(findUser.id, {
-        resetToken: resetToken,
+        password: password ? await hash(password, 10) : findUser.password,
     });
-
-    const resetPasswordTemplate = emailService.resetPasswordTemplate(
-        email,
-        findUser.name,
-        resetToken,
-        protocol,
-        host
-    );
-
-    await emailService.sendEmail(resetPasswordTemplate);
 };
 
 export { resetPasswordService };

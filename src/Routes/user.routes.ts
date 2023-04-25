@@ -6,6 +6,7 @@ import {
     listUserByIdController,
     listUserControler,
     resetPasswordController,
+    sendEmailPasswordRecoveryController,
     updateAdressController,
     updateUserController,
 } from "../controllers/user.controller";
@@ -66,4 +67,9 @@ userRoutes.patch(
     updateAdressController
 );
 
-userRoutes.post("/resetPassword", resetPasswordController);
+userRoutes.post(
+    "/sendEmailPasswordRecovery",
+    sendEmailPasswordRecoveryController
+);
+
+userRoutes.patch("/resetPassword/:id", resetPasswordController);
