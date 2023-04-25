@@ -11,6 +11,7 @@ import { listUserIDService } from "../services/user/listUserByID.service";
 import { updateUserService } from "../services/user/updateUser.service";
 import { listProfileService } from "../services/user/listUserProfile.service";
 import { updateAdressService } from "../services/user/updateAndress.service";
+import { sendEmailPasswordRecoveryService } from "../services/user/sendEmailPasswordRecovery.service";
 import { resetPasswordService } from "../services/user/resetPassword.service";
 
 const createUserController = async (req: Request, res: Response) => {
@@ -56,12 +57,22 @@ const updateAdressController = async (req: Request, res: Response) => {
     return res.status(200).json(updateAdress);
 };
 
-const resetPasswordController = async (req: Request, res: Response) => {
+const sendEmailPasswordRecoveryController = async (
+    req: Request,
+    res: Response
+) => {
     const { email } = req.body;
     const { protocol } = req;
     const host = req.get("host");
-    await resetPasswordService(email, protocol, host);
+    await sendEmailPasswordRecoveryService(email, protocol, host);
     return res.status(200).json({ message: "Token reset password sent" });
+};
+
+const resetPasswordController = async (req: Request, res: Response) => {
+    const { password } = req.body;
+    const resetToken = req.params.id;
+    await resetPasswordService(password, resetToken);
+    return res.status(200).json({ message: "Senha Atualizada" });
 };
 
 export {
@@ -72,5 +83,6 @@ export {
     deleteUserController,
     listProfileController,
     updateAdressController,
+    sendEmailPasswordRecoveryController,
     resetPasswordController,
 };
