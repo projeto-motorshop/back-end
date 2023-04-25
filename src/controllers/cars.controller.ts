@@ -4,6 +4,7 @@ import { createCarService } from "../services/car/createCar.service";
 import { deleteCarService } from "../services/car/deleteCar.service";
 import { listCarsService } from "../services/car/listCar.service";
 import { pathCarService } from "../services/car/pathCar.service";
+import { listCarByIDService } from "../services/car/listCarById.service";
 
 const createCarsController = async (req: Request, res: Response) => {
     const car: ICarsRequest = req.body;
@@ -39,12 +40,6 @@ const listCarsController = async (req: Request, res: Response) => {
     });
 };
 
-const listCarsByIDController = async (req: Request, res: Response) => {
-    const carID = req.params.id;
-    // const listCar = await listCarIDService(carID);
-    // return res.status(200).json(listCar);
-};
-
 const updateCarsController = async (req: Request, res: Response) => {
     console.log("cheguei");
 
@@ -60,10 +55,16 @@ const deleteCarsController = async (req: Request, res: Response) => {
     return res.status(204).json(deleteCar.message);
 };
 
+const listCarByIdController = async (req: Request, res: Response) => {
+    const carID = req.params.id;
+    const listCar = await listCarByIDService(carID);
+    return res.status(200).json(listCar);
+};
+
 export {
     createCarsController,
     listCarsController,
-    listCarsByIDController,
     updateCarsController,
     deleteCarsController,
+    listCarByIdController,
 };
