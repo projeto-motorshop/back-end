@@ -7,8 +7,10 @@ const listCarByIDService = async (carID: string) => {
     const findCar = await userRepository
         .createQueryBuilder("car")
         .leftJoinAndSelect("car.user", "user")
+        .leftJoinAndSelect("car.images", "images")
         .select([
             "car",
+            "images",
             "user.id",
             "user.name",
             "user.email",
