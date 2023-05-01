@@ -9,7 +9,7 @@ const resetPasswordService = async (password: any, resetToken: string) => {
     const findUser = await userRepository.findOneBy({ resetToken: resetToken });
 
     if (!findUser) {
-        throw new AppError("User not found!");
+        throw new AppError("User not found!", 404);
     }
 
     await userRepository.update(findUser.id, {
