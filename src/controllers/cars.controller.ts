@@ -2,10 +2,10 @@ import { Request, Response } from "express";
 import { ICarsRequest, ICarsUpdate } from "../interfaces/cars.intercafe";
 import { createCarService } from "../services/car/createCar.service";
 import { deleteCarService } from "../services/car/deleteCar.service";
-import { listCarsService } from "../services/car/listCar.service";
+import { listCarsService } from "../services/car/listCarPagination.service";
 import { pathCarService } from "../services/car/pathCar.service";
 import { listCarByIDService } from "../services/car/listCarById.service";
-import { listCarsParamsService } from "../services/car/listCarsTeste.service";
+import { listCarsParamsService } from "../services/car/listCars.service";
 
 const createCarsController = async (req: Request, res: Response) => {
     const car: ICarsRequest = req.body;
