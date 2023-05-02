@@ -12,6 +12,7 @@ export const listCarsParamsService = async (
     minPrice,
     maxPrice
 ) => {
+    console.log("ALOOOUU", maxKm, minKm);
     const carRepository = AppDataSource.getRepository(Car);
 
     let allCars = carRepository
@@ -38,9 +39,9 @@ export const listCarsParamsService = async (
 
     if (fuel) allCars = allCars.andWhere("Car.fuel = :fuel", { fuel });
 
-    if (minKm) allCars = allCars.andWhere("Car.km >= :minKm", { minKm });
+    if (minKm) allCars = allCars.andWhere("Car.mileage >= :minKm", { minKm });
 
-    if (maxKm) allCars = allCars.andWhere("Car.km <= :maxKm", { maxKm });
+    if (maxKm) allCars = allCars.andWhere("Car.mileage <= :maxKm", { maxKm });
 
     if (minPrice)
         allCars = allCars.andWhere("Car.price >= :minPrice", { minPrice });

@@ -23,16 +23,16 @@ const respImgSchema: SchemaOf<IImageResponse[]> = yup.array().of(
 
 const reqCarSchema: SchemaOf<ICarsRequest> = yup.object().shape({
     images: reqImgSchema,
-    description: yup.string().max(500).required(),
-    color: yup.string().max(20).required(),
+    description: yup.string().required(),
+    color: yup.string().required(),
     goodDeal: yup.boolean().notRequired(),
-    frontImg: yup.string().max(400).required(),
+    frontImg: yup.string().required(),
     priceFipe: yup.number().required(),
     price: yup.number().required(),
-    mileage: yup.number().max(30).required(),
-    fuel: yup.string().max(50).required(),
+    mileage: yup.number().required(),
+    fuel: yup.string().required(),
     year: yup.string().required(),
-    model: yup.string().max(50).required(),
+    model: yup.string().required(),
     brand: yup.string().required(),
 });
 
@@ -78,4 +78,3 @@ const updateCarSchema: SchemaOf<ICarsUpdate> = yup.object().shape({
 });
 
 export { reqCarSchema, respCarSchema, listRespCarSchema, updateCarSchema };
-
