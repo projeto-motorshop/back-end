@@ -20,8 +20,7 @@ carRoutes.post(
     ensureSalesmanValidMiddleware,
     createCarsController
 );
-
 carRoutes.get("", listCarsController);
-carRoutes.get("/:id", ensureAuthenticateMiddleware, listCarByIdController);
+carRoutes.get("/:id", listCarByIdController);
 carRoutes.patch("/:id", ensureAuthenticateMiddleware, updateCarsController);
 carRoutes.delete("/:id", ensureAuthenticateMiddleware, deleteCarsController);
