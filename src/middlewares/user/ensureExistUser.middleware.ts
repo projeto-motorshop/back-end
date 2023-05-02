@@ -12,7 +12,7 @@ const ensureExistUserMiddleware = async (
 
     const findUser = await userRepository.findOne({
         where: {
-            id: req.params.id,
+            id: req.params.carsId,
         },
     });
 
@@ -24,3 +24,4 @@ const ensureExistUserMiddleware = async (
 };
 
 export { ensureExistUserMiddleware };
+

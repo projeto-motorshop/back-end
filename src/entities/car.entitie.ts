@@ -29,17 +29,17 @@ export class Car {
     @Column()
     year: string;
 
-    @Column({ length: 30 })
-    mileage: string;
+    @Column()
+    mileage: number;
 
-    @Column({ length: 500 })
+    @Column()
     description: string;
 
     @Column()
-    price: string;
+    price: number;
 
     @Column()
-    priceFipe: string;
+    priceFipe: number;
 
     @Column({ length: 20 })
     color: string;

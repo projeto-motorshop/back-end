@@ -10,16 +10,16 @@ import {
     updateAdressController,
     updateUserController,
 } from "../controllers/user.controller";
+import { ensureAuthenticateMiddleware } from "../middlewares/ensureAuth.middleware";
 import { ensureDataIsValidMiddleware } from "../middlewares/user/ensureDataIsValid.middleware";
+import { ensureUserEmailExistsMiddleware } from "../middlewares/user/ensureEmailExist.middleware";
+import { ensureExistUserMiddleware } from "../middlewares/user/ensureExistUser.middleware";
+import { ensureUserIsOwnerMiddleware } from "../middlewares/user/ensureNotOwner.middleware";
 import {
     updateAddressSchema,
     updateUserSchema,
     userSchema,
 } from "../schemas/user.schema";
-import { ensureUserEmailExistsMiddleware } from "../middlewares/user/ensureEmailExist.middleware";
-import { ensureAuthenticateMiddleware } from "../middlewares/ensureAuth.middleware";
-import { ensureExistUserMiddleware } from "../middlewares/user/ensureExistUser.middleware";
-import { ensureUserIsOwnerMiddleware } from "../middlewares/user/ensureNotOwner.middleware";
 
 export const userRoutes = Router();
 
@@ -35,9 +35,7 @@ userRoutes.get("/profile", ensureAuthenticateMiddleware, listProfileController);
 
 userRoutes.get(
     "/:id",
-    ensureAuthenticateMiddleware,
-    ensureExistUserMiddleware,
-    ensureUserIsOwnerMiddleware,
+
     listUserByIdController
 );
 
