@@ -15,6 +15,7 @@ const createCarService = async (
         price,
         priceFipe,
         frontImg,
+        goodDeal,
         description,
         images,
         color,
@@ -25,7 +26,12 @@ const createCarService = async (
     const carRepository = AppDataSource.getRepository(Car);
     const imgRepository = AppDataSource.getRepository(Image);
 
+
+
     const findUser = await userRepository.findOneBy({ id: userID });
+
+
+
 
     const createCar = carRepository.create({
         brand: brand,
@@ -41,6 +47,14 @@ const createCarService = async (
         images: images,
         color: color,
     });
+
+    const difference = priceFipe - price;
+    const fivePercent = (priceFipe * 5) / 100;
+
+    if (difference >= fivePercent) {
+        createCar.goodDeal = true
+    }
+
 
     await carRepository.save(createCar);
 
@@ -62,3 +76,4 @@ const createCarService = async (
 };
 
 export { createCarService };
+
