@@ -1,0 +1,643 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Motor Shop",
+        "description": "Essa API tem o objetivo de gerenciar publicações para compra e venda de veículos",
+        "termsOfService": "http://localhost:3000/terms",
+        "contact": {
+            "email": "ramon.riotinto@gmail.com, novakoski2021@gmail.com, jeferson.veiiga@icloud.com, gabrielmelo98@hotmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000",
+            "description": "API local"
+        }
+    ],
+    "paths": {
+        "/login": {
+            "post": {
+                "summary": "Login do usuário",
+                "description": "Essa rota é responsável por fazer login de usuários",
+                "tags": ["Login"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": { "$ref": "#/components/schemas/Login" },
+                            "examples": {
+                                "Login": {
+                                    "value": {
+                                        "email": "joão@gmail.com",
+                                        "password": "123456789"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "403": { "description": "Password or email incorrect" },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Login"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users": {
+            "post": {
+                "summary": "Cadastro de usuário",
+                "description": "Essa rota é responsável por cadastrar usuários",
+                "tags": ["Users"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": { "$ref": "#/components/schemas/User" },
+                            "examples": {
+                                "User": {
+                                    "value": {
+                                        "name": "João",
+                                        "urlImg": "https://uploads.metropoles.com/wp-content/uploads/2021/07/21170852/Joao-Gomes4-600x400.jpg",
+                                        "email": "joão@gmail.com",
+                                        "password": "123456789",
+                                        "phone": "40028922",
+                                        "cpf": "99999999999",
+                                        "description": "Sou anunciante de carros a 10 anos",
+                                        "salesman": true,
+                                        "birthdate": "1990-01-01",
+                                        "city": "Belo Horizonte",
+                                        "state": "MG",
+                                        "cep": "99900000",
+                                        "street": "Rua das laranjas",
+                                        "number": "137",
+                                        "complement": "A1"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "409": { "description": "Invalid body" },
+                    "404": { "description": "Existing Email" },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "Listagem de usuários",
+                "description": "Rota é responsável por listar usuários",
+                "tags": ["Users"],
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "401": { "description": "Invalid token" },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/profile": {
+            "get": {
+                "summary": "Listar informações geral do usuário",
+                "description": "Rota é responsável por listar perfil do usuário",
+                "tags": ["Users"],
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "401": { "description": "Invalid token" },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "description": "Busca do usuário pelo ID",
+                "summary": "Buscar por ID",
+                "tags": ["Users"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do usuário",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "401": { "description": "Invalid Token" },
+                    "404": { "description": "User not found" },
+                    "403": { "description": "Not authorization" },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Atualização do usuário pelo ID",
+                "summary": "Atualização por ID",
+                "tags": ["Users"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do usuário",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": { "$ref": "#/components/schemas/User" },
+                            "examples": {
+                                "User": {
+                                    "value": {
+                                        "name": "João Gomes",
+                                        "urlImg": "https://uploads.metropoles.com/wp-content/uploads/2021/07/21170852/Joao-Gomes4-600x400.jpg",
+                                        "email": "joão.gomes@gmail.com",
+                                        "password": "12345678910",
+                                        "phone": "40029900",
+                                        "cpf": "99999999999",
+                                        "description": "Sou anunciante de carros a 15 anos",
+                                        "salesman": true,
+                                        "birthdate": "1990-01-01",
+                                        "city": "Belo Horizonte",
+                                        "state": "MG",
+                                        "cep": "99900000",
+                                        "street": "Rua das laranjas",
+                                        "number": "137",
+                                        "complement": "A1"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "409": { "description": "Invalid body" },
+                    "401": { "description": "Invalid Token" },
+                    "404": { "description": "User not found" },
+                    "403": { "description": "Not authorization" },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Deleção do usuário pelo ID",
+                "summary": "Deleção por ID",
+                "tags": ["Users"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do usuário",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "403": { "description": "Not authorization" },
+                    "401": { "description": "Invalid Token" },
+                    "404": { "description": "User not found" },
+                    "200": { "description": "Deleted user" }
+                }
+            }
+        },
+        "/users/adress/{id}": {
+            "patch": {
+                "description": "Atualização do usuário pelo ID",
+                "summary": "Atualização por ID",
+                "tags": ["Users"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do usuário",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": { "$ref": "#/components/schemas/Adress" },
+                            "examples": {
+                                "User": {
+                                    "value": {
+                                        "city": "Recife",
+                                        "state": "PE",
+                                        "cep": "99900000",
+                                        "street": "Rua do sol",
+                                        "number": "512",
+                                        "complement": "1"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "409": { "description": "Invalid body" },
+                    "401": { "description": "Invalid Token" },
+                    "404": { "description": "User not found" },
+                    "403": { "description": "Not authorization" },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Adress"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/sendEmailPasswordRecovery": {
+            "post": {
+                "summary": "Enviar E-mail para recuperação de senha",
+                "description": "Essa rota é responsável por enviar o email para recuperação de senha",
+                "tags": ["Users"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendEmail"
+                            },
+                            "examples": {
+                                "SendEmail": {
+                                    "value": {
+                                        "email": "joão@gmail.com"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "403": { "description": "Invalid Email" },
+                    "200": { "description": "Password reset link sent!" }
+                }
+            }
+        },
+        "/users/resetPassword/{id}": {
+            "patch": {
+                "description": "Define a nova senha do usuário pelo resetToken",
+                "summary": "Define nova senha do usuário",
+                "tags": ["Users"],
+                "parameters": [
+                    {
+                        "name": "resetToken",
+                        "in": "path",
+                        "description": "resetToken do usuário",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ResetPassword"
+                            },
+                            "examples": {
+                                "ResetPassword": {
+                                    "value": {
+                                        "password": "123456789",
+                                        "passwordConfirm": "123456789"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "404": { "description": "User not found" },
+                    "200": { "description": "New password set" }
+                }
+            }
+        },
+        "/cars": {
+            "post": {
+                "summary": "Criação de anúncios",
+                "description": "Essa rota é responsável por criar veículos",
+                "tags": ["Cars"],
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateCar"
+                            },
+                            "examples": {
+                                "Car": {
+                                    "value": {
+                                        "brand": "Chevrolet",
+                                        "model": "Onix",
+                                        "year": "2022",
+                                        "color": "branco",
+                                        "fuel": "flex",
+                                        "mileage": "0",
+                                        "price": "100000",
+                                        "priceFipe": "100000",
+                                        "frontImg": "https://quatrorodas.abril.com.br/wp-content/uploads/2022/12/01-galeria-onix-my23-1-e1671886765906.webp",
+                                        "description": "Carro novo, zero, no plástico!",
+                                        "images": [
+                                            {
+                                                "urlImg": "https://www.chevrolet.com.br/content/dam/chevrolet/mercosur/brazil/portuguese/index/cars/2023-onix/gallery/01-images/05-galeria-onix-my23.jpg?imwidth=650"
+                                            },
+                                            {
+                                                "urlImg": "https://i.ytimg.com/vi/zHwq7II0ZMo/maxresdefault.jpg"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": { "description": "Invalid Token" },
+                    "403": { "description": "Not authorization" },
+                    "409": { "description": "Invalid body" },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/CreateCar"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "Listagem de anúncios",
+                "description": "Rota é responsável por listar veículos",
+                "tags": ["Cars"],
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "401": { "description": "Invalid token" },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "$ref": "#/components/schemas/CreateCar"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/cars/{id}": {
+            "get": {
+                "description": "Busca do anúncio por ID",
+                "summary": "Buscar veículo por ID",
+                "tags": ["Cars"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do veículo",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "401": { "description": "Invalid Token" },
+                    "404": { "description": "Car not found" },
+                    "403": { "description": "Not authorization" },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/CreateCar"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Atualização do anúncio por ID",
+                "summary": "Atualização do veículo por ID",
+                "tags": ["Cars"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do veículo",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateCar"
+                            },
+                            "examples": {
+                                "Car": {
+                                    "value": {
+                                        "model": "Onix 1.4",
+                                        "year": "2023",
+                                        "color": "preto",
+                                        "frontImg": "https://drngjg9hn4yur.cloudfront.net/292075/1024x768/968dafcd95db7240e17668e8507d1056.jpeg",
+                                        "images": [
+                                            {
+                                                "urlImg": "https://drngjg9hn4yur.cloudfront.net/292075/1024x768/6527b653a7be80a9d00946f31f32a817.jpeg"
+                                            },
+                                            {
+                                                "urlImg": "https://quatrorodas.abril.com.br/wp-content/uploads/2022/02/FLP9782.jpg?quality=70&strip=info"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": { "description": "Invalid Token" },
+                    "403": { "description": "Not authorization" },
+                    "404": { "description": "Car not found" },
+                    "409": { "description": "Invalid body" },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/CreateCar"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Deleção do anúncio por ID",
+                "summary": "Deletar veículo por ID",
+                "tags": ["Cars"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do veículo",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "401": { "description": "Invalid Token" },
+                    "403": { "description": "Not authorization" },
+                    "404": { "description": "User not found" },
+                    "200": { "description": "Deleted car" }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "uuid" },
+                    "name": { "type": "string" },
+                    "urlImg": { "type": "string" },
+                    "email": { "type": "string" },
+                    "password": { "type": "string" },
+                    "phone": { "type": "string" },
+                    "cpf": { "type": "string" },
+                    "description": { "type": "string" },
+                    "salesman": { "type": "boolean" },
+                    "birthdate": { "type": "date" },
+                    "city": { "type": "string" },
+                    "state": { "type": "string" },
+                    "cep": { "type": "string" },
+                    "street": { "type": "string" },
+                    "number": { "type": "string" },
+                    "complement": { "type": "string" }
+                }
+            },
+            "Login": {
+                "type": "object",
+                "properties": {
+                    "tokenUser": { "type": "string" }
+                }
+            },
+            "Adress": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "string" },
+                    "state": { "type": "string" },
+                    "cep": { "type": "string" },
+                    "street": { "type": "string" },
+                    "city": { "type": "string" },
+                    "number": { "type": "string" },
+                    "complement": { "type": "string" }
+                }
+            },
+            "SendEmail": {
+                "type": "object",
+                "properties": {
+                    "email": { "type": "string" }
+                }
+            },
+            "ResetPassword": {
+                "type": "object",
+                "properties": {
+                    "password": { "type": "string" },
+                    "passwordConfirm": { "type": "string" }
+                }
+            },
+            "CreateCar": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "string" },
+                    "brand": { "type": "string" },
+                    "model": { "type": "string" },
+                    "year": { "type": "string" },
+                    "color": { "type": "string" },
+                    "fuel": { "type": "string" },
+                    "mileage": { "type": "string" },
+                    "price": { "type": "string" },
+                    "priceFipe": { "type": "string" },
+                    "frontImg": { "type": "string" },
+                    "description": { "type": "string" },
+                    "goodDeal": { "type": "boolean" },
+                    "isPublished": { "type": "boolean" },
+                    "images": [{ "urlImg": { "type": "string" } }]
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}

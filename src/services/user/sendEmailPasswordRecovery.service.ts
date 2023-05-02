@@ -14,7 +14,7 @@ const sendEmailPasswordRecoveryService = async (
     const findUser = await userRepository.findOneBy({ email: email });
 
     if (!findUser) {
-        throw new AppError("invalid email", 404);
+        throw new AppError("invalid email", 403);
     }
 
     const resetToken = randomUUID();

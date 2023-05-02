@@ -8,9 +8,8 @@ const ensureSalesmanValidMiddleware = async (
 ) => {
     const { salesman } = req.user;
 
-    console.log(req.user);
     if (!salesman) {
-        throw new AppError("Not Authorization", 401);
+        throw new AppError("Not Authorization", 403);
     }
 
     return next();

@@ -33,11 +33,7 @@ userRoutes.post(
 userRoutes.get("", ensureAuthenticateMiddleware, listUserControler);
 userRoutes.get("/profile", ensureAuthenticateMiddleware, listProfileController);
 
-userRoutes.get(
-    "/:id",
-
-    listUserByIdController
-);
+userRoutes.get("/:id", ensureExistUserMiddleware, listUserByIdController);
 
 userRoutes.patch(
     "/:id",

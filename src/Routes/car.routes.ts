@@ -23,7 +23,6 @@ carRoutes.post(
     isGoodDealMiddleware,
     createCarsController
 );
-
 carRoutes.get("", listCarsController);
 carRoutes.get("/:id", listCarByIdController);
 carRoutes.patch("/:id", ensureAuthenticateMiddleware, ensureDataIsValidMiddleware(updateCarSchema), ensureSalesmanValidMiddleware, ensureExistCarMiddleware, updateCarsController);

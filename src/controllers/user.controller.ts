@@ -65,14 +65,14 @@ const sendEmailPasswordRecoveryController = async (
     const { protocol } = req;
     const host = req.get("host");
     await sendEmailPasswordRecoveryService(email, protocol, host);
-    return res.status(200).json({ message: "Token reset password sent" });
+    return res.status(200).json({ message: "Password reset link sent!" });
 };
 
 const resetPasswordController = async (req: Request, res: Response) => {
     const { password } = req.body;
     const resetToken = req.params.id;
     await resetPasswordService(password, resetToken);
-    return res.status(200).json({ message: "Senha Atualizada" });
+    return res.status(200).json({ message: "New password set!" });
 };
 
 export {
