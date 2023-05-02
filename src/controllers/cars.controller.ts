@@ -5,6 +5,7 @@ import { deleteCarService } from "../services/car/deleteCar.service";
 import { listCarsService } from "../services/car/listCar.service";
 import { pathCarService } from "../services/car/pathCar.service";
 import { listCarByIDService } from "../services/car/listCarById.service";
+import { listCarsParamsService } from "../services/car/listCarsTeste.service";
 
 const createCarsController = async (req: Request, res: Response) => {
     const car: ICarsRequest = req.body;
@@ -14,35 +15,60 @@ const createCarsController = async (req: Request, res: Response) => {
 };
 
 const listCarsController = async (req: Request, res: Response) => {
-    let { limit, offset }: any = req.query;
-    limit = parseInt(limit);
-    offset = parseInt(offset);
+    const {
+        brand,
+        model,
+        color,
+        year,
+        fuel,
+        minKm,
+        maxKm,
+        minPrice,
+        maxPrice,
+    } = req.query;
 
-    if (!limit) {
-        limit = 12;
-    }
-    if (!offset) {
-        offset = 0;
-    }
-
-    const { allCar, totalCars, nextUrl, previousUrl } = await listCarsService(
-        limit,
-        offset
+    const listUsers = await listCarsParamsService(
+        brand,
+        model,
+        color,
+        year,
+        fuel,
+        minKm,
+        maxKm,
+        minPrice,
+        maxPrice
     );
-
-    return res.status(200).json({
-        nextUrl,
-        previousUrl,
-        limit,
-        offset,
-        totalCars,
-        allCars: allCar,
-    });
+    return res.status(200).json(listUsers);
 };
 
-const updateCarsController = async (req: Request, res: Response) => {
-    console.log("cheguei");
+// const listCarsController = async (req: Request, res: Response) => {
+//     let { limit, offset }: any = req.query;
+//     limit = parseInt(limit);
+//     offset = parseInt(offset);
 
+//     if (!limit) {
+//         limit = 12;
+//     }
+//     if (!offset) {
+//         offset = 0;
+//     }
+
+//     const { allCar, totalCars, nextUrl, previousUrl } = await listCarsService(
+//         limit,
+//         offset
+//     );
+
+//     return res.status(200).json({
+//         nextUrl,
+//         previousUrl,
+//         limit,
+//         offset,
+//         totalCars,
+//         allCars: allCar,
+//     });
+// };
+
+const updateCarsController = async (req: Request, res: Response) => {
     const carBody: ICarsUpdate = req.body;
     const carID = req.params.id;
     const updateCar = await pathCarService(carBody, carID);
@@ -63,8 +89,8 @@ const listCarByIdController = async (req: Request, res: Response) => {
 
 export {
     createCarsController,
-    listCarsController,
     updateCarsController,
     deleteCarsController,
     listCarByIdController,
+    listCarsController,
 };
