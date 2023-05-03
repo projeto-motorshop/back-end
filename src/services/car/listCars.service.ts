@@ -12,13 +12,12 @@ export const listCarsParamsService = async (
     minPrice,
     maxPrice
 ) => {
-    console.log("ALOOOUU", maxKm, minKm);
     const carRepository = AppDataSource.getRepository(Car);
 
     let allCars = carRepository
         .createQueryBuilder("Car")
-        .innerJoinAndSelect("Car.user", "User")
-        .innerJoinAndSelect("Car.images", "Image")
+        .leftJoinAndSelect("Car.user", "User")
+        .leftJoinAndSelect("Car.images", "Image")
         .select([
             "Car",
             "Image",
