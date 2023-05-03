@@ -8,7 +8,7 @@ export class Comments {
     @PrimaryGeneratedColumn("uuid")
     id: string
 
-    @Column({ length: 50 })
+    @Column()
     description: string
 
     @CreateDateColumn()
