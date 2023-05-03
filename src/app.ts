@@ -7,6 +7,7 @@ import handleError from "./errors/handleError";
 import { userRoutes } from "./Routes/user.routes";
 import { loginRoutes } from "./Routes/login.routes";
 import { carRoutes } from "./Routes/car.routes";
+import { commentsRoutes } from "./Routes/comment.routes";
 import swaggerUi from "swagger-ui-express";
 import swaggerDocs from "../swagger.json";
 
@@ -17,6 +18,8 @@ app.use(express.json());
 app.use("/login", loginRoutes);
 
 app.use("/users", userRoutes);
+
+app.use("/comments", commentsRoutes);
 
 app.use("/cars", carRoutes);
 
