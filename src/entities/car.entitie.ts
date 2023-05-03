@@ -39,7 +39,7 @@ export class Car {
     price: number;
 
     @Column()
-    priceFipe: number;
+    priceFipe: string;
 
     @Column({ length: 20 })
     color: string;
