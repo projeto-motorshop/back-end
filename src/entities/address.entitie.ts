@@ -8,7 +8,7 @@ export class Address {
     @Column()
     state: string;
 
-    @Column({ length: 400 })
+    @Column({ length: 50 })
     cep: string;
 
     @Column({ length: 50 })

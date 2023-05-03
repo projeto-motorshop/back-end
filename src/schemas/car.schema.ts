@@ -27,7 +27,7 @@ const reqCarSchema: SchemaOf<ICarsRequest> = yup.object().shape({
     color: yup.string().required(),
     goodDeal: yup.boolean().notRequired(),
     frontImg: yup.string().required(),
-    priceFipe: yup.number().required(),
+    priceFipe: yup.string().required(),
     price: yup.number().required(),
     mileage: yup.number().required(),
     fuel: yup.string().required(),
@@ -49,7 +49,7 @@ const respCarSchema: SchemaOf<ICarsResponse> = yup.object().shape({
     goodDeal: yup.boolean().notRequired(),
     frontImg: yup.string().notRequired(),
     createdAt: yup.date().notRequired(),
-    priceFipe: yup.number().notRequired(),
+    priceFipe: yup.string().notRequired(),
     price: yup.number().notRequired(),
     mileage: yup.number().notRequired(),
     fuel: yup.string().notRequired(),
@@ -68,7 +68,7 @@ const updateCarSchema: SchemaOf<ICarsUpdate> = yup.object().shape({
     color: yup.string().notRequired(),
     isPublished: yup.boolean().notRequired(),
     frontImg: yup.string().notRequired(),
-    priceFipe: yup.number().notRequired(),
+    priceFipe: yup.string().notRequired(),
     price: yup.number().notRequired(),
     mileage: yup.number().notRequired(),
     fuel: yup.string().notRequired(),
@@ -78,3 +78,4 @@ const updateCarSchema: SchemaOf<ICarsUpdate> = yup.object().shape({
 });
 
 export { reqCarSchema, respCarSchema, listRespCarSchema, updateCarSchema };
+
