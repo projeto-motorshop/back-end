@@ -15,7 +15,6 @@ const createCarService = async (
         price,
         priceFipe,
         frontImg,
-        goodDeal,
         description,
         images,
         color,
@@ -48,8 +47,8 @@ const createCarService = async (
         color: color,
     });
 
-    const difference = priceFipe - price;
-    const fivePercent = (priceFipe * 5) / 100;
+    const difference = parseInt(priceFipe) - price;
+    const fivePercent = (parseInt(priceFipe) * 5) / 100;
 
     if (difference >= fivePercent) {
         createCar.goodDeal = true
