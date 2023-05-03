@@ -18,7 +18,7 @@ export interface ICarsResponse {
     fuel: string;
     mileage: number;
     price: number;
-    priceFipe: number;
+    priceFipe: string;
     frontImg: string;
     description: string;
     images: IImageResponse[];
@@ -33,7 +33,7 @@ export interface ICarsRequest {
     mileage: number;
     goodDeal: boolean;
     price: number;
-    priceFipe: number;
+    priceFipe: string;
     frontImg: string;
     description: string;
     images: IImageRequest[];
@@ -48,7 +48,7 @@ export interface ICarsUpdate {
     fuel?: string;
     mileage?: number;
     price?: number;
-    priceFipe?: number;
+    priceFipe?: string;
     frontImg?: string;
     description?: string;
     images?: IImageRequest[];
