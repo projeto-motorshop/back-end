@@ -556,6 +556,202 @@
                     "200": { "description": "Deleted car" }
                 }
             }
+        },
+        "/comments/cars/{id}": {
+            "post": {
+                "description": "Criação de commentarios no anuncio",
+                "summary": "Criando comentário pelo ID do veículo",
+                "tags": ["Comments"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "post",
+                        "description": "ID do veículo",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateComments"
+                            },
+                            "examples": {
+                                "Comments": {
+                                    "value": {
+                                        "description": "Achei o carro maravilhoso"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": { "description": "Invalid Token" },
+                    "403": { "description": "Not authorization" },
+                    "404": { "description": "Car ID not found" },
+                    "409": { "description": "Invalid body" },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/CreateComments"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "description": "Busca os comentários de um determinado veículo",
+                "summary": "Busca comentários do anúncio",
+                "tags": ["Comments"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do veículo",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "401": { "description": "Invalid Token" },
+                    "404": { "description": "Car ID not found" },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/CreateComments"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/comments": {
+            "get": {
+                "summary": "Listagem de comentários",
+                "description": "Rota é responsável por listar comentários",
+                "tags": ["Comments"],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "$ref": "#/components/schemas/CreateComments"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/comments/{id}": {
+            "get": {
+                "description": "Busca do comentário pelo ID",
+                "summary": "Busca por ID",
+                "tags": ["Comments"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do comentário",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "401": { "description": "Invalid Token" },
+                    "404": { "description": "Comment not found" },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/CreateComments"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Atualização do comentário",
+                "summary": "Atualização do comentário por ID",
+                "tags": ["Comments"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do comentário",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateComments"
+                            },
+                            "examples": {
+                                "Comments": {
+                                    "value": {
+                                        "description": "Gostei muito desse veículo"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": { "description": "Invalid Token" },
+                    "403": { "description": "Not authorization" },
+                    "404": { "description": "Comment not found" },
+                    "409": { "description": "Invalid body" },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/CreateComments"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Deleção do comentário",
+                "summary": "Deletar comentário por ID",
+                "tags": ["Comments"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do comentário",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "401": { "description": "Invalid Token" },
+                    "403": { "description": "Not authorization" },
+                    "404": { "description": "Comment not found" },
+                    "200": { "description": "Deleted comment" }
+                }
+            }
         }
     },
     "components": {
@@ -631,7 +827,17 @@
                     "images": [{ "urlImg": { "type": "string" } }]
                 }
             },
-            "CreateComments": {}
+            "CreateComments": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "string" },
+                    "description": { "type": "string" },
+                    "createdAt": { "type": "string" },
+                    "updatedAt": { "type": "string" },
+                    "user": { "type": "string" },
+                    "car": { "type": "string" }
+                }
+            }
         },
         "securitySchemes": {
             "bearerAuth": {
