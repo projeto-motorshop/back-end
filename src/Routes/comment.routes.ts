@@ -12,6 +12,6 @@ commentsRoutes.get("", ensureAuthenticateMiddleware, listCommentControler)
 commentsRoutes.get("/cars/:id", ensureAuthenticateMiddleware, listCommentsByCarIdController)
 commentsRoutes.get("/:id", ensureAuthenticateMiddleware, listCommentsByIdController)
 commentsRoutes.post("/cars/:id", ensureAuthenticateMiddleware, ensureDataIsValidMiddleware(createCommentSchema), createCommentController)
-commentsRoutes.patch("/cars/:id", ensureAuthenticateMiddleware, ensureUserIsCommentOwnerMiddleware, ensureDataIsValidMiddleware(updateCommentSchema), updateCommentController)
-commentsRoutes.delete("/cars/:id", ensureAuthenticateMiddleware, ensureUserIsCommentOwnerMiddleware, deleteCommentController)
+commentsRoutes.patch("/:id", ensureAuthenticateMiddleware, ensureDataIsValidMiddleware(updateCommentSchema), ensureUserIsCommentOwnerMiddleware, updateCommentController)
+commentsRoutes.delete("/:id", ensureAuthenticateMiddleware, ensureUserIsCommentOwnerMiddleware, deleteCommentController)
 

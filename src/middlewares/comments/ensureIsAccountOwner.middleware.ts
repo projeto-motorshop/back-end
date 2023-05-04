@@ -1,4 +1,6 @@
 import { NextFunction, Request, Response } from "express";
+import AppDataSource from "../../data-source";
+import { Comments } from "../../entities/comments.entitie";
 import AppError from "../../errors/appError";
 
 const ensureUserIsCommentOwnerMiddleware = async (
@@ -11,12 +13,20 @@ const ensureUserIsCommentOwnerMiddleware = async (
     if (isAdm) {
         next();
     }
+    const commentRepository = AppDataSource.getRepository(Comments);
 
-    if (id !== req.user.id) {
-        throw new AppError("Not Authorization", 403);
+    const findComment = await commentRepository.findOneBy({ id: req.params.id })
+
+    if (!findComment) {
+        throw new AppError('comment not found', 404)
     }
 
-    return next();
+    if (findComment.user.id === id) {
+        console.log('oi');
+        next()
+    } else {
+        throw new AppError('you must be account owner', 404)
+    }
 };
 
 export { ensureUserIsCommentOwnerMiddleware };
