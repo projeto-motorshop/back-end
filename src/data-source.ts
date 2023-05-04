@@ -3,7 +3,6 @@ import path from "path";
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 import { Address } from "./entities/address.entitie";
-
 import { Car } from "./entities/car.entitie";
 import { Comments } from "./entities/comments.entitie";
 import { Image } from "./entities/image.entitie";

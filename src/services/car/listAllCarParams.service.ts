@@ -1,7 +1,7 @@
 import AppDataSource from "../../data-source";
 import { Car } from "../../entities/car.entitie";
 
-export const listCarsParamsService = async (
+export const listAllCarsParamsService = async (
     brand,
     model,
     color,
@@ -12,12 +12,12 @@ export const listCarsParamsService = async (
     minPrice,
     maxPrice
 ) => {
-    const carRepository = AppDataSource.getRepository(Car);
+    const carRepo = AppDataSource.getRepository(Car);
 
-    let allCars = carRepository
+    let allCars = carRepo
         .createQueryBuilder("Car")
-        .leftJoinAndSelect("Car.user", "User")
-        .leftJoinAndSelect("Car.images", "Image")
+        .innerJoinAndSelect("Car.user", "User")
+        .innerJoinAndSelect("Car.images", "Image")
         .select([
             "Car",
             "Image",
@@ -27,7 +27,6 @@ export const listCarsParamsService = async (
             "User.urlImg",
             "User.phone",
         ]);
-
     if (brand) allCars = allCars.where("Car.brand = :brand", { brand });
 
     if (model) allCars = allCars.andWhere("Car.model = :model", { model });
