@@ -17,6 +17,8 @@ export const listCarsParamsPaginationService = async (
     const carRepository = AppDataSource.getRepository(Car);
 
     const totalCars = await carRepository.count();
+    const pages = totalCars / 12
+    const totalPages = Math.ceil(pages)
 
     const nextPage = offset + limit;
     const nextUrl =
@@ -65,5 +67,5 @@ export const listCarsParamsPaginationService = async (
 
     const cars = await allCars.getMany();
 
-    return { cars, totalCars, nextUrl, previousUrl };
+    return { cars, totalCars, nextUrl, previousUrl, totalPages };
 };

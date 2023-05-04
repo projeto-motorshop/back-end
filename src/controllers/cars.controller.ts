@@ -2,10 +2,10 @@ import { Request, Response } from "express";
 import { ICarsRequest, ICarsUpdate } from "../interfaces/cars.intercafe";
 import { createCarService } from "../services/car/createCar.service";
 import { deleteCarService } from "../services/car/deleteCar.service";
-import { pathCarService } from "../services/car/pathCar.service";
+import { listAllCarsParamsService } from "../services/car/listAllCarParams.service";
 import { listCarByIDService } from "../services/car/listCarById.service";
 import { listCarsParamsPaginationService } from "../services/car/listCarsParamsPagination.service";
-import { listAllCarsParamsService } from "../services/car/listAllCarParams.service";
+import { pathCarService } from "../services/car/pathCar.service";
 
 const createCarsController = async (req: Request, res: Response) => {
     const car: ICarsRequest = req.body;
@@ -38,7 +38,7 @@ const listCarsPaginationController = async (req: Request, res: Response) => {
         maxPrice,
     } = req.query;
 
-    const { cars, totalCars, nextUrl, previousUrl } =
+    const { cars, totalCars, nextUrl, previousUrl, totalPages } =
         await listCarsParamsPaginationService(
             brand,
             model,
@@ -57,6 +57,7 @@ const listCarsPaginationController = async (req: Request, res: Response) => {
         previousUrl,
         limit,
         offset,
+        totalPages,
         totalCars,
         allCars: cars,
     });
@@ -117,3 +118,4 @@ export {
     listCarsPaginationController,
     listAllCarsParamsController,
 };
+
