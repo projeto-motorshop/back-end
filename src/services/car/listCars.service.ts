@@ -10,9 +10,22 @@ export const listCarsParamsService = async (
     minKm,
     maxKm,
     minPrice,
-    maxPrice
+    maxPrice,
+    limit,
+    offset
 ) => {
     const carRepository = AppDataSource.getRepository(Car);
+
+    const totalCars = await carRepository.count();
+
+    const nextPage = offset + limit;
+    const nextUrl =
+        nextPage < totalCars ? `/cars?limit=${limit}&offset=${nextPage}` : null;
+
+    const previous = offset - limit < 0 ? null : offset - limit;
+
+    const previousUrl =
+        previous != null ? `/cars?limit=${limit}&offset=${previous}` : null;
 
     let allCars = carRepository
         .createQueryBuilder("Car")
@@ -26,7 +39,9 @@ export const listCarsParamsService = async (
             "User.id",
             "User.urlImg",
             "User.phone",
-        ]);
+        ])
+        .skip(offset)
+        .take(limit);
 
     if (brand) allCars = allCars.where("Car.brand = :brand", { brand });
 
@@ -50,5 +65,5 @@ export const listCarsParamsService = async (
 
     const cars = await allCars.getMany();
 
-    return cars;
+    return { cars, totalCars, nextUrl, previousUrl };
 };
