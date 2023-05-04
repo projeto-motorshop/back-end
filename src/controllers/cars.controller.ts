@@ -15,6 +15,17 @@ const createCarsController = async (req: Request, res: Response) => {
 };
 
 const listCarsController = async (req: Request, res: Response) => {
+    let { limit, offset }: any = req.query;
+    limit = parseInt(limit);
+    offset = parseInt(offset);
+
+    if (!limit) {
+        limit = 12;
+    }
+    if (!offset) {
+        offset = 0;
+    }
+
     const {
         brand,
         model,
@@ -27,18 +38,30 @@ const listCarsController = async (req: Request, res: Response) => {
         maxPrice,
     } = req.query;
 
-    const listUsers = await listCarsParamsService(
-        brand,
-        model,
-        color,
-        year,
-        fuel,
-        minKm,
-        maxKm,
-        minPrice,
-        maxPrice
-    );
-    return res.status(200).json(listUsers);
+    const { cars, totalCars, nextUrl, previousUrl } =
+        await listCarsParamsService(
+            brand,
+            model,
+            color,
+            year,
+            fuel,
+            minKm,
+            maxKm,
+            minPrice,
+            maxPrice,
+            limit,
+            offset
+        );
+    return res
+        .status(200)
+        .json({
+            nextUrl,
+            previousUrl,
+            limit,
+            offset,
+            totalCars,
+            allCars: cars,
+        });
 };
 
 // const listCarsController = async (req: Request, res: Response) => {
