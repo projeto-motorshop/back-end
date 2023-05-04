@@ -8,9 +8,11 @@ const listCarByIDService = async (carID: string) => {
         .createQueryBuilder("car")
         .leftJoinAndSelect("car.user", "user")
         .leftJoinAndSelect("car.images", "images")
+        .leftJoinAndSelect("car.comments", "comments")
         .select([
             "car",
             "images",
+            "comments",
             "user.id",
             "user.name",
             "user.email",
@@ -26,3 +28,4 @@ const listCarByIDService = async (carID: string) => {
 };
 
 export { listCarByIDService };
+

@@ -3,11 +3,10 @@ import path from "path";
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 import { Address } from "./entities/address.entitie";
-import { Brand } from "./entities/brand.entitie";
+
 import { Car } from "./entities/car.entitie";
 import { Comments } from "./entities/comments.entitie";
 import { Image } from "./entities/image.entitie";
-import { Model } from "./entities/model.entitie";
 import { User } from "./entities/user.entitie";
 
 const AppDataSource = new DataSource(
@@ -27,7 +26,7 @@ const AppDataSource = new DataSource(
             database: process.env.PGDATABASE,
             logging: true,
             synchronize: false,
-            entities: [Address, Car, Image, User, Comments, Brand, Model],
+            entities: [Address, Car, Image, User, Comments],
             migrations: [path.join(__dirname, "./migrations/**.{js,ts}")],
         }
 );
