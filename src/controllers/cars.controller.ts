@@ -2,10 +2,10 @@ import { Request, Response } from "express";
 import { ICarsRequest, ICarsUpdate } from "../interfaces/cars.intercafe";
 import { createCarService } from "../services/car/createCar.service";
 import { deleteCarService } from "../services/car/deleteCar.service";
-import { listCarsService } from "../services/car/listCarPagination.service";
 import { pathCarService } from "../services/car/pathCar.service";
 import { listCarByIDService } from "../services/car/listCarById.service";
-import { listCarsParamsService } from "../services/car/listCars.service";
+import { listCarsParamsPaginationService } from "../services/car/listCarsParamsPagination.service";
+import { listAllCarsParamsService } from "../services/car/listAllCarParams.service";
 
 const createCarsController = async (req: Request, res: Response) => {
     const car: ICarsRequest = req.body;
@@ -14,7 +14,7 @@ const createCarsController = async (req: Request, res: Response) => {
     return res.status(201).json(createCar);
 };
 
-const listCarsController = async (req: Request, res: Response) => {
+const listCarsPaginationController = async (req: Request, res: Response) => {
     let { limit, offset }: any = req.query;
     limit = parseInt(limit);
     offset = parseInt(offset);
@@ -39,7 +39,7 @@ const listCarsController = async (req: Request, res: Response) => {
     } = req.query;
 
     const { cars, totalCars, nextUrl, previousUrl } =
-        await listCarsParamsService(
+        await listCarsParamsPaginationService(
             brand,
             model,
             color,
@@ -52,44 +52,43 @@ const listCarsController = async (req: Request, res: Response) => {
             limit,
             offset
         );
-    return res
-        .status(200)
-        .json({
-            nextUrl,
-            previousUrl,
-            limit,
-            offset,
-            totalCars,
-            allCars: cars,
-        });
+    return res.status(200).json({
+        nextUrl,
+        previousUrl,
+        limit,
+        offset,
+        totalCars,
+        allCars: cars,
+    });
 };
 
-// const listCarsController = async (req: Request, res: Response) => {
-//     let { limit, offset }: any = req.query;
-//     limit = parseInt(limit);
-//     offset = parseInt(offset);
+const listAllCarsParamsController = async (req: Request, res: Response) => {
+    const {
+        brand,
+        model,
+        color,
+        year,
+        fuel,
+        minKm,
+        maxKm,
+        minPrice,
+        maxPrice,
+    } = req.query;
 
-//     if (!limit) {
-//         limit = 12;
-//     }
-//     if (!offset) {
-//         offset = 0;
-//     }
+    const listAllCars = await listAllCarsParamsService(
+        brand,
+        model,
+        color,
+        year,
+        fuel,
+        minKm,
+        maxKm,
+        minPrice,
+        maxPrice
+    );
 
-//     const { allCar, totalCars, nextUrl, previousUrl } = await listCarsService(
-//         limit,
-//         offset
-//     );
-
-//     return res.status(200).json({
-//         nextUrl,
-//         previousUrl,
-//         limit,
-//         offset,
-//         totalCars,
-//         allCars: allCar,
-//     });
-// };
+    return res.status(200).json(listAllCars);
+};
 
 const updateCarsController = async (req: Request, res: Response) => {
     const carBody: ICarsUpdate = req.body;
@@ -115,5 +114,6 @@ export {
     updateCarsController,
     deleteCarsController,
     listCarByIdController,
-    listCarsController,
+    listCarsPaginationController,
+    listAllCarsParamsController,
 };

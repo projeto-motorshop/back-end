@@ -1,7 +1,7 @@
 import AppDataSource from "../../data-source";
 import { Car } from "../../entities/car.entitie";
 
-export const listCarsParamsService = async (
+export const listAllCarsParamsService = async (
     brand,
     model,
     color,
@@ -10,27 +10,14 @@ export const listCarsParamsService = async (
     minKm,
     maxKm,
     minPrice,
-    maxPrice,
-    limit,
-    offset
+    maxPrice
 ) => {
-    const carRepository = AppDataSource.getRepository(Car);
+    const carRepo = AppDataSource.getRepository(Car);
 
-    const totalCars = await carRepository.count();
-
-    const nextPage = offset + limit;
-    const nextUrl =
-        nextPage < totalCars ? `/cars?limit=${limit}&offset=${nextPage}` : null;
-
-    const previous = offset - limit < 0 ? null : offset - limit;
-
-    const previousUrl =
-        previous != null ? `/cars?limit=${limit}&offset=${previous}` : null;
-
-    let allCars = carRepository
+    let allCars = carRepo
         .createQueryBuilder("Car")
-        .leftJoinAndSelect("Car.user", "User")
-        .leftJoinAndSelect("Car.images", "Image")
+        .innerJoinAndSelect("Car.user", "User")
+        .innerJoinAndSelect("Car.images", "Image")
         .select([
             "Car",
             "Image",
@@ -39,10 +26,7 @@ export const listCarsParamsService = async (
             "User.id",
             "User.urlImg",
             "User.phone",
-        ])
-        .skip(offset)
-        .take(limit);
-
+        ]);
     if (brand) allCars = allCars.where("Car.brand = :brand", { brand });
 
     if (model) allCars = allCars.andWhere("Car.model = :model", { model });
@@ -65,5 +49,5 @@ export const listCarsParamsService = async (
 
     const cars = await allCars.getMany();
 
-    return { cars, totalCars, nextUrl, previousUrl };
+    return cars;
 };

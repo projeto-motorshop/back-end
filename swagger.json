@@ -630,7 +630,8 @@
                     "isPublished": { "type": "boolean" },
                     "images": [{ "urlImg": { "type": "string" } }]
                 }
-            }
+            },
+            "CreateComments": {}
         },
         "securitySchemes": {
             "bearerAuth": {

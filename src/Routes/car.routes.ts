@@ -2,8 +2,9 @@ import { Router } from "express";
 import {
     createCarsController,
     deleteCarsController,
+    listAllCarsParamsController,
     listCarByIdController,
-    listCarsController,
+    listCarsPaginationController,
     updateCarsController,
 } from "../controllers/cars.controller";
 import { ensureExistCarMiddleware } from "../middlewares/cars/ensureCarExist.middleware";
@@ -23,7 +24,24 @@ carRoutes.post(
     isGoodDealMiddleware,
     createCarsController
 );
-carRoutes.get("", listCarsController);
+
+carRoutes.get("/allCars", listAllCarsParamsController);
+
+carRoutes.get("/carsPagination", listCarsPaginationController);
+
 carRoutes.get("/:id", listCarByIdController);
-carRoutes.patch("/:id", ensureAuthenticateMiddleware, ensureDataIsValidMiddleware(updateCarSchema), ensureSalesmanValidMiddleware, ensureExistCarMiddleware, updateCarsController);
-carRoutes.delete("/:id", ensureAuthenticateMiddleware, ensureSalesmanValidMiddleware, deleteCarsController);
+
+carRoutes.patch(
+    "/:id",
+    ensureAuthenticateMiddleware,
+    ensureDataIsValidMiddleware(updateCarSchema),
+    ensureSalesmanValidMiddleware,
+    ensureExistCarMiddleware,
+    updateCarsController
+);
+carRoutes.delete(
+    "/:id",
+    ensureAuthenticateMiddleware,
+    ensureSalesmanValidMiddleware,
+    deleteCarsController
+);
