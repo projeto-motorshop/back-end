@@ -4,14 +4,13 @@ import { Comments } from "../../entities/comments.entitie";
 import { User } from "../../entities/user.entitie";
 import AppError from "../../errors/appError";
 import { ICommentRequest } from "../../interfaces/comments.interface";
-
+import { respCommentSchema } from "../../schemas/comment.schema";
 
 export const createCommentService = async (
     description: string,
     userId: string,
     carId: string
 ): Promise<ICommentRequest> => {
-
     const commentRepository = AppDataSource.getRepository(Comments);
     const userRepository = AppDataSource.getRepository(User);
     const carRepository = AppDataSource.getRepository(Car);
@@ -34,11 +33,11 @@ export const createCommentService = async (
         car: findCar,
     });
 
+    const comment = await commentRepository.save(createComment);
 
-    console.log(description);
+    const respComments = await respCommentSchema.validate(comment, {
+        stripUnknown: true,
+    });
 
-    const comment = await commentRepository.save(createComment)
-    // console.log(comment);
-
-    return comment;
+    return respComments;
 };
