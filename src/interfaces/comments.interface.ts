@@ -1,18 +1,14 @@
 export interface ICommentUpdate {
-    description?: string
+    description?: string;
 }
-
 
 export interface ICommentRequest {
-    description: string
+    description: string;
 }
 
-
 export interface ICommentResponse {
-    id: string
-    description: string
-    createdAt: Date
-    updatedAt: Date
-    user: object
-    car: object
+    id: string;
+    description: string;
+    createdAt: Date;
+    updatedAt: Date;
 }
