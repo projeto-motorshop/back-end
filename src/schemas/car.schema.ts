@@ -77,5 +77,25 @@ const updateCarSchema: SchemaOf<ICarsUpdate> = yup.object().shape({
     brand: yup.string().notRequired(),
 });
 
-export { reqCarSchema, respCarSchema, listRespCarSchema, updateCarSchema };
+const updateImagesCarSchema: SchemaOf<ICarsUpdate> = yup.object().shape({
+    images: respImgSchema,
+    description: yup.string().notRequired(),
+    color: yup.string().notRequired(),
+    isPublished: yup.boolean().notRequired(),
+    frontImg: yup.string().notRequired(),
+    priceFipe: yup.string().notRequired(),
+    price: yup.number().notRequired(),
+    mileage: yup.number().notRequired(),
+    fuel: yup.string().notRequired(),
+    year: yup.string().notRequired(),
+    model: yup.string().notRequired(),
+    brand: yup.string().notRequired(),
+});
 
+export {
+    reqCarSchema,
+    respCarSchema,
+    listRespCarSchema,
+    updateCarSchema,
+    updateImagesCarSchema,
+};
