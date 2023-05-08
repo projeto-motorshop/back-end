@@ -53,3 +53,18 @@ export interface ICarsUpdate {
     description?: string;
     images?: IImageRequest[];
 }
+
+export interface IImagesUpdate {
+    color?: string;
+    isPublished?: boolean;
+    brand?: string;
+    model?: string;
+    year?: string;
+    fuel?: string;
+    mileage?: number;
+    price?: number;
+    priceFipe?: string;
+    frontImg?: string;
+    description?: string;
+    images?: IImageResponse[];
+}
