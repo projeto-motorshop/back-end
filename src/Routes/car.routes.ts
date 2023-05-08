@@ -6,13 +6,18 @@ import {
     listCarByIdController,
     listCarsPaginationController,
     updateCarsController,
+    updateImagesController,
 } from "../controllers/cars.controller";
 import { ensureExistCarMiddleware } from "../middlewares/cars/ensureCarExist.middleware";
 import isGoodDealMiddleware from "../middlewares/cars/isGoodDeal.middleware";
 import { ensureAuthenticateMiddleware } from "../middlewares/ensureAuth.middleware";
 import { ensureDataIsValidMiddleware } from "../middlewares/user/ensureDataIsValid.middleware";
 import { ensureSalesmanValidMiddleware } from "../middlewares/user/ensureSalesmanValid.middleware";
-import { reqCarSchema, updateCarSchema } from "../schemas/car.schema";
+import {
+    reqCarSchema,
+    updateCarSchema,
+    updateImagesCarSchema,
+} from "../schemas/car.schema";
 
 export const carRoutes = Router();
 
@@ -44,4 +49,13 @@ carRoutes.delete(
     ensureAuthenticateMiddleware,
     ensureSalesmanValidMiddleware,
     deleteCarsController
+);
+
+carRoutes.patch(
+    "/images/:id",
+    ensureAuthenticateMiddleware,
+    ensureDataIsValidMiddleware(updateImagesCarSchema),
+    ensureExistCarMiddleware,
+    ensureSalesmanValidMiddleware,
+    updateImagesController
 );

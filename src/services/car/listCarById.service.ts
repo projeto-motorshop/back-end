@@ -2,17 +2,21 @@ import AppDataSource from "../../data-source";
 import { Car } from "../../entities/car.entitie";
 
 const listCarByIDService = async (carID: string) => {
-    const userRepository = AppDataSource.getRepository(Car);
+    const carRepository = AppDataSource.getRepository(Car);
 
-    const findCar = await userRepository
+    const findCar = await carRepository
         .createQueryBuilder("car")
         .leftJoinAndSelect("car.user", "user")
         .leftJoinAndSelect("car.images", "images")
         .leftJoinAndSelect("car.comments", "comments")
+        .leftJoinAndSelect("comments.user", "userComment")
         .select([
             "car",
             "images",
             "comments",
+            "userComment.id",
+            "userComment.name",
+            "userComment.urlImg",
             "user.id",
             "user.name",
             "user.email",
@@ -28,4 +32,3 @@ const listCarByIDService = async (carID: string) => {
 };
 
 export { listCarByIDService };
-

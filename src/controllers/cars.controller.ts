@@ -1,11 +1,16 @@
 import { Request, Response } from "express";
-import { ICarsRequest, ICarsUpdate } from "../interfaces/cars.intercafe";
+import {
+    ICarsRequest,
+    ICarsUpdate,
+    IImagesUpdate,
+} from "../interfaces/cars.intercafe";
 import { createCarService } from "../services/car/createCar.service";
 import { deleteCarService } from "../services/car/deleteCar.service";
 import { listAllCarsParamsService } from "../services/car/listAllCarParams.service";
 import { listCarByIDService } from "../services/car/listCarById.service";
 import { listCarsParamsPaginationService } from "../services/car/listCarsParamsPagination.service";
 import { pathCarService } from "../services/car/pathCar.service";
+import { updateImagesCarService } from "../services/car/updateImagesCar.service";
 
 const createCarsController = async (req: Request, res: Response) => {
     const car: ICarsRequest = req.body;
@@ -110,6 +115,13 @@ const listCarByIdController = async (req: Request, res: Response) => {
     return res.status(200).json(listCar);
 };
 
+const updateImagesController = async (req: Request, res: Response) => {
+    const carBody: IImagesUpdate = req.body;
+    const carID: string = req.params.id;
+    const updateCar = await updateImagesCarService(carBody, carID);
+    return res.status(204).json(updateCar);
+};
+
 export {
     createCarsController,
     updateCarsController,
@@ -117,5 +129,5 @@ export {
     listCarByIdController,
     listCarsPaginationController,
     listAllCarsParamsController,
+    updateImagesController,
 };
-
