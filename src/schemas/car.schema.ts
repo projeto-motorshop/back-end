@@ -22,7 +22,7 @@ const respImgSchema: SchemaOf<IImageResponse[]> = yup.array().of(
 );
 
 const reqCarSchema: SchemaOf<ICarsRequest> = yup.object().shape({
-    images: reqImgSchema,
+    images: reqImgSchema.required(),
     description: yup.string().required(),
     color: yup.string().max(20).required(),
     goodDeal: yup.boolean().notRequired(),

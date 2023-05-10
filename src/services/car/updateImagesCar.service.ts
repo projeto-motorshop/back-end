@@ -24,19 +24,27 @@ export const updateImagesCarService = async (
 
     const imagesResquest = data.images;
     const imagesCar = findCar.images;
-    console.log("TESTE", imagesCar);
 
     for (let i = 0; i < imagesResquest.length; i++) {
-        const findImage = await imageRepository
-            .createQueryBuilder("image")
-            .select(["image"])
-            .where("image.id = :id", { id: imagesCar[i].id })
-            .getOne();
+        if (i >= imagesCar.length) {
+            const createImg = imageRepository.create({
+                ...imagesResquest[i],
+                car: findCar,
+            });
 
-        await imageRepository.update(imagesCar[i].id, {
-            ...findImage,
-            ...imagesResquest[i],
-        });
+            await imageRepository.save(createImg);
+        } else {
+            const findImage = await imageRepository
+                .createQueryBuilder("image")
+                .select(["image"])
+                .where("image.id = :id", { id: imagesCar[i].id })
+                .getOne();
+
+            await imageRepository.update(imagesCar[i].id, {
+                ...findImage,
+                ...imagesResquest[i],
+            });
+        }
     }
 
     return { message: "Imagens Atualizadas" };

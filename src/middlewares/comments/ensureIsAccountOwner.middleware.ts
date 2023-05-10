@@ -15,19 +15,19 @@ const ensureUserIsCommentOwnerMiddleware = async (
     }
     const commentRepository = AppDataSource.getRepository(Comments);
 
-    const findComment = await commentRepository.findOneBy({ id: req.params.id })
+    const findComment = await commentRepository.findOneBy({
+        id: req.params.id,
+    });
 
     if (!findComment) {
-        throw new AppError('comment not found', 404)
+        throw new AppError("comment not found", 404);
     }
 
     if (findComment.user.id === id) {
-        console.log('oi');
-        next()
+        next();
     } else {
-        throw new AppError('you must be account owner', 404)
+        throw new AppError("you must be account owner", 404);
     }
 };
 
 export { ensureUserIsCommentOwnerMiddleware };
-
