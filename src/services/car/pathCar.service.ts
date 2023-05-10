@@ -10,15 +10,18 @@ export const pathCarService = async (
     try {
         const carsRepo = AppDataSource.getRepository(Car);
 
+        const { images, ...dataWithoutImages } = carsData;
+
         const findCar = await carsRepo
             .createQueryBuilder("car")
+            .leftJoinAndSelect("car.images", "images")
             .select(["car"])
             .where("car.id = :id", { id: carsId })
             .getOne();
 
         await carsRepo.update(carsId, {
             ...findCar,
-            ...carsData,
+            ...dataWithoutImages,
         });
 
         const respCar = await carsRepo
