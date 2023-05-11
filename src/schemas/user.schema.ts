@@ -3,7 +3,6 @@ import { SchemaOf } from "yup";
 import {
     IUserResponse,
     IUserRequest,
-    IUserUpdate,
     IAddressRequest,
     IAddressUpdate,
 } from "../interfaces/user.interface";
