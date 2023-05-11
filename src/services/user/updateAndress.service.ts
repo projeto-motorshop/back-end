@@ -3,7 +3,7 @@ import { Address } from "../../entities/address.entitie";
 import { User } from "../../entities/user.entitie";
 import AppError from "../../errors/appError";
 import { IAddressUpdate } from "../../interfaces/user.interface";
-import { respUserSchema, updateUserSchema } from "../../schemas/user.schema";
+import { updateUserSchema } from "../../schemas/user.schema";
 
 const updateAdressService = async (
     AdressData: IAddressUpdate,

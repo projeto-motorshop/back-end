@@ -1,6 +1,5 @@
 import AppDataSource from "../../data-source";
 import { User } from "../../entities/user.entitie";
-import AppError from "../../errors/appError";
 import { IUserResponse } from "../../interfaces/user.interface";
 import { listRespUserSchema } from "../../schemas/user.schema";
 

@@ -1,4 +1,3 @@
-import { Address } from "./../entities/address.entitie";
 export interface IUserResponse {
     id: string;
     name: string;
